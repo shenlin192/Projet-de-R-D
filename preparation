@@ -1,0 +1,28 @@
+/*************************安装***********************/
+1 install nodejs
+	$ wget -qO- https://deb.nodesource.com/setup_6.x | sudo bash -
+	$ sudo apt-get install nodejs
+
+2 install npm
+
+3 通过npm 安装 ffi (一个能使nodejs 调用外部c或c++函数的addon)
+
+4 出现错误
+	-Uncaught Error: Module did not self-register
+	solution： $ npm rebuild
+
+5 install DGtal：http://dgtal.org/doc/stable/moduleBuildDGtal.html
+
+/**************************use Dgtal in the projet**********************/
+Ref http://dgtal.org/doc/stable/moduleHowToUseDGtal.html
+1 先新建一个build文件
+2 在与source code （helloworld.cpp）同层目录下写好CmakeList.txt
+3 在build中运行 cmake ..
+4 在build中运行 make 生成 .os 文件 
+	.os文件就是一个可以被调用的library
+5 在js中使用ffi 调用.os文件，如
+	var ffi = require('ffi'),
+	var hw = ffi.Library('./libhelloworldlib', {
+	    main: ['int', ['int']],
+	    });
+
