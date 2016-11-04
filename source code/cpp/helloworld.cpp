@@ -32,7 +32,9 @@ class Rectangle {
 
   public:
     Rectangle (int,int);
+    Rectangle(){};
     int area () {return (width*height);};
+    int perimeter () {return (2*width+2*height);};
     //static int addition (int a, int b)
 };
 
@@ -53,20 +55,36 @@ int addition (int a, int b)
 }
 
 
-//a global function that return a self-define type
+//a normal global function that uses the Rectangle class 
 int creatRect(int a, int b){
   Rectangle r1(a,b);
-  return r1.area();
+  return r1.area() + r1.perimeter();
+}
+
+//a global function that return a Rectangle object
+Rectangle createRect2(int a, int b){
+  Rectangle r1(a,b);
+  return r1;
+}
+
+//a global function that return a Rectangle object
+Rectangle* createRect3(int a, int b){
+  return new Rectangle(a,b);
 }
 
 //a main function
+/*
 int main(int argc, char** argv)
 {
   
  // DGtal::trace.info() << "Helloworld from DGtal ";
  //DGtal::trace.emphase() << "(version "<< DGTAL_VERSION << ")"<< std::endl;
- Rectangle rect(3,4);
+ Rectangle objet;
+ objet=createRect2(3,4);
+ cout<<objet.area()<<endl;
+	
  //cout<<rect.area()<<endl;
  //cout<<"hi33"<<endl;
 	return 0;
 }
+*/

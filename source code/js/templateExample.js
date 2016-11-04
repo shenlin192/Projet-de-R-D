@@ -28,7 +28,7 @@ var Dgtal = ref.types.void;
 //	    x: 'double',
 //	    y: 'double',
 //	}),
-var hw = ffi.Library('/home/shen/Desktop/PR&D/GitHub/build/libhelloworldLib', {
+var hw = ffi.Library('./libhelloworldLib', {
 	_Z8additionii: ['int', ['int','int']],
 	_Z9creatRectii: ['int', ['int','int']],
 	_Z11createRect2ii: [RectangleType, ['int','int']],
