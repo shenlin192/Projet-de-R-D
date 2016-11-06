@@ -54,7 +54,6 @@ int addition (int a, int b)
   return r;
 }
 
-
 //a normal global function that uses the Rectangle class 
 int creatRect(int a, int b){
   Rectangle r1(a,b);

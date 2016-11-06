@@ -21,4 +21,4 @@ TARGET_LINK_LIBRARIES(helloworldLib ${DGTAL_LIBRARIES})
 
 ADD_LIBRARY(templateExampleLib SHARED ./cpp/templateExample)
 TARGET_LINK_LIBRARIES(templateExampleLib ${DGTAL_LIBRARIES})
-
+#
