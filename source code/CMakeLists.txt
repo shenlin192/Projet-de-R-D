@@ -12,13 +12,16 @@ INCLUDE_DIRECTORIES(${DGTAL_INCLUDE_DIRS})
 LINK_DIRECTORIES(${DGTAL_LIBRARY_DIRS})
 
 #ADD_EXECUTABLE(targetfile sourcefile) generate .exe
-#ADD_EXECUTABLE(helloworld helloworld)
-#TARGET_LINK_LIBRARIES(helloworld ${DGTAL_LIBRARIES})
+ADD_EXECUTABLE(helloworld ./cpp/helloworld)
+TARGET_LINK_LIBRARIES(helloworld ${DGTAL_LIBRARIES})
 
-#ADD_LIBRARY(targetfile sourcefile) generate .so
+#ADD_EXECUTABLE(GridCurve ./cpp/GridCurve)
+#TARGET_LINK_LIBRARIES(GridCurve ${DGTAL_LIBRARIES})
+
+#ADD_LIBRARY(targetfile type sourcefile) generate .so
 ADD_LIBRARY(helloworldLib SHARED ./cpp/helloworld)
 TARGET_LINK_LIBRARIES(helloworldLib ${DGTAL_LIBRARIES})
 
 ADD_LIBRARY(templateExampleLib SHARED ./cpp/templateExample)
 TARGET_LINK_LIBRARIES(templateExampleLib ${DGTAL_LIBRARIES})
-#
+
