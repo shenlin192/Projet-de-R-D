@@ -30,9 +30,10 @@ class Rectangle {
 
   public:
     Rectangle (int,int);
+    Rectangle(Rectangle& r);
     Rectangle(){};
-    int area () {return (width*height);};
-    int perimeter () {return (2*width+2*height);};
+    int area();
+    int perimeter();
     //static int addition (int a, int b)
 };
 
@@ -42,7 +43,18 @@ Rectangle::Rectangle (int a, int b) {
 	  height = b;
 }
 
+Rectangle::Rectangle(Rectangle& r) {
+    width = r.width;
+    height = r.height;
+}
 
+int Rectangle::area() {
+    return width * height;
+}
+
+int Rectangle::perimeter() {
+    return 2 * width + 2 * height;
+}
 
 //a normal global function
 int addition (int a, int b)
