@@ -1,4 +1,7 @@
-/*************************安装***********************/
+
+/*	YOU DONT NEED TO READ THIS         */
+
+/*************************prequest***********************/
 1 install nodejs
 	$ wget -qO- https://deb.nodesource.com/setup_6.x | sudo bash -
 	$ sudo apt-get install nodejs
