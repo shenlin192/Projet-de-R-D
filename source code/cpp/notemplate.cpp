@@ -11,7 +11,7 @@ class Rectangle {
   public:
     Rectangle (int,int);
     Rectangle(Rectangle& r);
-    Rectangle(){};
+   // Rectangle(){};
     int area();
     int perimeter();
     void setWidth(int);
@@ -41,20 +41,13 @@ void Rectangle::setWidth(int a){
 	width = a;
 }
 
-//a normal global function that uses the Rectangle class 
-/*int calculate(int a, int b){
-  Rectangle r1(a,b);
-  return r1.area() + r1.perimeter();
-}*/
-
-//a global function that return a Rectangle object
-Rectangle createRect2(int a, int b){
+//difinition of global functions
+Rectangle createRectObj(int a, int b){
   Rectangle r1(a,b);
   return r1;
 }
 
-//a global function that return a Rectangle object
-Rectangle* createRectPtr3(int a, int b){
+Rectangle* createRectPtr(int a, int b){
   return new Rectangle(a,b);
 }
 
@@ -68,4 +61,5 @@ int main(){
 	cout<<c.area()<<endl;	
 	
 }
+
 
