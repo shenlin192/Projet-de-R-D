@@ -1,5 +1,3 @@
-
-
 #include <iostream>
 #include <sstream>
 
@@ -12,10 +10,11 @@ class Rectangle {
 
   public:
     Rectangle (int,int);
-    //Rectangle(Rectangle& r);
+    Rectangle(Rectangle& r);
     Rectangle(){};
     int area();
     int perimeter();
+    void setWidth(int);
 
 };
 
@@ -24,11 +23,11 @@ Rectangle::Rectangle (int a, int b) {
 	  width = a;
 	  height = b;
 }
-/*
+
 Rectangle::Rectangle(Rectangle& r) {
     width = r.width;
     height = r.height;
-}*/
+}
 
 int Rectangle::area() {
     return width * height;
@@ -38,11 +37,15 @@ int Rectangle::perimeter() {
     return 2 * width + 2 * height;
 }
 
+void Rectangle::setWidth(int a){
+	width = a;
+}
+
 //a normal global function that uses the Rectangle class 
-int calculate(int a, int b){
+/*int calculate(int a, int b){
   Rectangle r1(a,b);
   return r1.area() + r1.perimeter();
-}
+}*/
 
 //a global function that return a Rectangle object
 Rectangle createRect2(int a, int b){
@@ -55,5 +58,14 @@ Rectangle* createRectPtr3(int a, int b){
   return new Rectangle(a,b);
 }
 
+int main(){
 
+	Rectangle c(2,3);	
+	cout<<c.area()<<endl;		
+	Rectangle d(c);
+	d.setWidth(10);
+	cout<<d.perimeter()<<endl;
+	cout<<c.area()<<endl;	
+	
+}
 
