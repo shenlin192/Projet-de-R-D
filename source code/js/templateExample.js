@@ -34,15 +34,18 @@ Rectangle.prototype.area = function area() {
     return hw._ZN9RectangleIiE4areaEv(this._buffer);
 }
 
-//test
+//object constructed by a function returning a pointer
 console.log(new Rectangle(3, 4).area());
 
+//object constructed by a function returning an object
 console.log(hw._Z13createRectObjii(1,2));
 
+//Object constructed by C++ from existing buffer
 let a = new RectangleType();
 hw._ZN9RectangleIiEC1Eii(a.ref(),7,8);
 console.log(hw._ZN9RectangleIiE4areaEv(a.ref()));
 
+//Object constructed by JavaScript
 let b = new RectangleType();
 b.x=3;
 b.y=4;
