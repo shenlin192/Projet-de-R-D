@@ -10,7 +10,7 @@ class Rectangle {
 
   public:
     Rectangle (int,int);
-    Rectangle(Rectangle& r);
+   // Rectangle(Rectangle& r);
    // Rectangle(){};
     int area();
     int perimeter();
@@ -24,10 +24,12 @@ Rectangle::Rectangle (int a, int b) {
 	  height = b;
 }
 
+/*
 Rectangle::Rectangle(Rectangle& r) {
     width = r.width;
     height = r.height;
 }
+*/
 
 int Rectangle::area() {
     return width * height;
