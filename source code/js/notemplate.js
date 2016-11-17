@@ -18,7 +18,7 @@ var hw = ffi.Library('../build/libnotemplateLib', {
     _ZN9RectangleC1Eii: [RectanglePtrType, [RectanglePtrType, 'int', 'int']], // ok
     _ZN9RectangleC2Eii: [RectanglePtrType, [RectanglePtrType, 'int', 'int']], //same as the previous one
      
-    _Z13createRectObjii: [RectangleType, ['int', 'int']],//not ok
+    _Z13createRectObjii: [RectangleType, ['int', 'int']],//ok
     _Z13createRectPtrii: [RectanglePtrType, ['int', 'int']],//ok
     
     _ZN9Rectangle9perimeterEv: ['int', [RectanglePtrType]],//ok
@@ -51,16 +51,15 @@ console.log('area of a: ', hw._ZN9Rectangle4areaEv(a));
 
 
 console.log('-------------------------------------------------');
-console.log('Object creation by a function returning an object');
-console.log(hw._Z13createRectObjii(3, 4));
-//console.log(b['ref.buffer']);
-//console.log(hw._ZN9Rectangle4areaEv(b['ref.buffer']));
-//console.log(hw._ZN9Rectangle9perimeterEv(b['ref.buffer']));
+console.log('Object created by a function returning an object');
+var b=hw._Z13createRectObjii(3, 4);
+console.log(hw._ZN9Rectangle9perimeterEv(b.ref()))
 
 
-/*
+console.log('-------------------------------------------------');
+console.log('Encapsulate static functions into JS');
 function Rectangle(x, y) {
-    this._buffer = hw._Z14createRectPtr3ii(x, y);
+    this._buffer = hw._Z13createRectPtrii(x, y);
 }
 
 Rectangle.prototype.area = function area() {
@@ -68,5 +67,5 @@ Rectangle.prototype.area = function area() {
 };
 
 console.log(new Rectangle(3, 4).area());
-*/
+
 
