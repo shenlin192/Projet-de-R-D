@@ -6,3 +6,6 @@
 
 #ignore the build folder
 build/
+
+#ignore the boost folder
+boost/
