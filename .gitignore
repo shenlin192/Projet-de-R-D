@@ -9,3 +9,6 @@ build/
 
 #ignore the boost folder
 boost/
+
+#ignore the swig/build folder 
+swig/build
