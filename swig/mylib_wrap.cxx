@@ -1480,10 +1480,13 @@ SWIGRUNTIME void JS_veto_set_variable(v8::Local<v8::String> property, v8::Local<
 
 /* -------- TYPES TABLE (BEGIN) -------- */
 
-#define SWIGTYPE_p_MyClass swig_types[0]
-#define SWIGTYPE_p_char swig_types[1]
-static swig_type_info *swig_types[3];
-static swig_module_info swig_module = {swig_types, 2, 0, 0, 0, 0};
+#define SWIGTYPE_p_Rectangle swig_types[0]
+#define SWIGTYPE_p_RectangleTT_float_t swig_types[1]
+#define SWIGTYPE_p_RectangleTT_int_t swig_types[2]
+#define SWIGTYPE_p_TestBoost swig_types[3]
+#define SWIGTYPE_p_char swig_types[4]
+static swig_type_info *swig_types[6];
+static swig_module_info swig_module = {swig_types, 5, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -1502,7 +1505,29 @@ static swig_module_info swig_module = {swig_types, 2, 0, 0, 0, 0};
 #include <stdexcept>
 
 
-#include "myclass.h"
+#include "global.h"
+#include "rectangle.h"
+#include "TestBoost.h"
+#include "templateExample.h"
+
+
+SWIGINTERN
+int SWIG_AsVal_double (v8::Handle<v8::Value> obj, double *val)
+{
+  if(!obj->IsNumber()) {
+    return SWIG_TypeError;
+  }
+  if(val) *val = obj->NumberValue();
+
+  return SWIG_OK;
+}
+
+
+SWIGINTERN
+v8::Handle<v8::Value> SWIG_From_double   (double val)
+{
+  return SWIGV8_NUMBER_NEW(val);
+}
 
 
 SWIGINTERN
@@ -1517,57 +1542,169 @@ int SWIG_AsVal_int (v8::Handle<v8::Value> valRef, int* val)
 }
 
 
-#define SWIGV8_INIT mylib_initialize
-
-
-SWIGV8_ClientData _exports_MyClass_clientData;
-
-
-static SwigV8ReturnValue _wrap_new_MyClass(const SwigV8Arguments &args) {
-  SWIGV8_HANDLESCOPE();
-  
-  v8::Handle<v8::Object> self = args.Holder();
-  int arg1 ;
-  int val1 ;
-  int ecode1 = 0 ;
-  MyClass *result;
-  if(args.Length() != 1) SWIG_exception_fail(SWIG_ERROR, "Illegal number of arguments for _wrap_new_MyClass.");
-  ecode1 = SWIG_AsVal_int(args[0], &val1);
-  if (!SWIG_IsOK(ecode1)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_MyClass" "', argument " "1"" of type '" "int""'");
-  } 
-  arg1 = (int)(val1);
-  result = (MyClass *)new MyClass(arg1);
-  
-  
-  
-  
-  SWIGV8_SetPrivateData(self, result, SWIGTYPE_p_MyClass, SWIG_POINTER_OWN);
-  SWIGV8_RETURN(self);
-  
-  goto fail;
-fail:
-  SWIGV8_RETURN(SWIGV8_UNDEFINED());
+SWIGINTERNINLINE
+v8::Handle<v8::Value> SWIG_From_int  (int value)
+{
+  return SWIGV8_INT32_NEW(value);
 }
 
 
-static SwigV8ReturnValue _wrap_MyClass_sayHello(const SwigV8Arguments &args) {
+SWIGINTERN swig_type_info*
+SWIG_pchar_descriptor(void)
+{
+  static int init = 0;
+  static swig_type_info* info = 0;
+  if (!init) {
+    info = SWIG_TypeQuery("_p_char");
+    init = 1;
+  }
+  return info;
+}
+
+
+SWIGINTERNINLINE v8::Handle<v8::Value>
+SWIG_FromCharPtrAndSize(const char* carray, size_t size)
+{
+  if (carray) {
+    if (size > INT_MAX) {
+      // TODO: handle extra long strings
+      return SWIGV8_UNDEFINED();
+    } else {
+      v8::Handle<v8::String> js_str = SWIGV8_STRING_NEW2(carray, size);
+      return js_str;
+    }
+  } else {
+    return SWIGV8_UNDEFINED();
+  }
+}
+
+
+SWIGINTERNINLINE v8::Handle<v8::Value> 
+SWIG_FromCharPtr(const char *cptr)
+{ 
+  return SWIG_FromCharPtrAndSize(cptr, (cptr ? strlen(cptr) : 0));
+}
+
+
+#include <float.h>
+
+
+#include <math.h>
+
+
+/* Getting isfinite working pre C99 across multiple platforms is non-trivial. Users can provide SWIG_isfinite on older platforms. */
+#ifndef SWIG_isfinite
+/* isfinite() is a macro for C99, but a function in namespace std for C++11. */
+# if defined(isfinite)
+#  define SWIG_isfinite(X) (isfinite(X))
+# elif defined __cplusplus && __cplusplus >= 201103L
+#  define SWIG_isfinite(X) (std::isfinite(X))
+# elif defined(_MSC_VER)
+#  define SWIG_isfinite(X) (_finite(X))
+# elif defined(__sun) && defined(__SVR4)
+#  include <ieeefp.h>
+#  define SWIG_isfinite(X) (finite(X))
+# endif
+#endif
+
+
+/* Accept infinite as a valid float value unless we are unable to check if a value is finite */
+#ifdef SWIG_isfinite
+# define SWIG_Float_Overflow_Check(X) ((X < -FLT_MAX || X > FLT_MAX) && SWIG_isfinite(X))
+#else
+# define SWIG_Float_Overflow_Check(X) ((X < -FLT_MAX || X > FLT_MAX))
+#endif
+
+
+SWIGINTERN int
+SWIG_AsVal_float (v8::Handle<v8::Value> obj, float *val)
+{
+  double v;
+  int res = SWIG_AsVal_double (obj, &v);
+  if (SWIG_IsOK(res)) {
+    if (SWIG_Float_Overflow_Check(v)) {
+      return SWIG_OverflowError;
+    } else {
+      if (val) *val = (float)(v);
+    }
+  }  
+  return res;
+}
+
+
+SWIGINTERNINLINE v8::Handle<v8::Value>
+SWIG_From_float  (float value)
+{    
+  return SWIG_From_double  (value);
+}
+
+
+#define SWIGV8_INIT mylib_initialize
+
+
+SWIGV8_ClientData _exports_Rectangle_clientData;
+SWIGV8_ClientData _exports_TestBoost_clientData;
+SWIGV8_ClientData _exports_intRectangle_clientData;
+SWIGV8_ClientData _exports_floatRectangle_clientData;
+
+
+static void _wrap_My_variable_set(v8::Local<v8::String> property, v8::Local<v8::Value> value,
+  const SwigV8PropertyCallbackInfoVoid &info) {
+  SWIGV8_HANDLESCOPE();
+  
+  double arg1 ;
+  double val1 ;
+  int ecode1 = 0 ;
+  
+  ecode1 = SWIG_AsVal_double(value, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "My_variable_set" "', argument " "1"" of type '" "double""'");
+  } 
+  arg1 = (double)(val1);
+  My_variable = arg1;
+  
+  
+  goto fail;
+fail:
+  return;
+}
+
+
+static SwigV8ReturnValue _wrap_My_variable_get(v8::Local<v8::String> property, const SwigV8PropertyCallbackInfo &info) {
   SWIGV8_HANDLESCOPE();
   
   v8::Handle<v8::Value> jsresult;
-  MyClass *arg1 = (MyClass *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
+  double result;
   
-  if(args.Length() != 0) SWIG_exception_fail(SWIG_ERROR, "Illegal number of arguments for _wrap_MyClass_sayHello.");
+  result = (double)My_variable;
+  jsresult = SWIG_From_double((double)(result));
   
-  res1 = SWIG_ConvertPtr(args.Holder(), &argp1,SWIGTYPE_p_MyClass, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "MyClass_sayHello" "', argument " "1"" of type '" "MyClass *""'"); 
-  }
-  arg1 = (MyClass *)(argp1);
-  (arg1)->sayHello();
-  jsresult = SWIGV8_UNDEFINED();
+  SWIGV8_RETURN_INFO(jsresult, info);
+  
+  goto fail;
+fail:
+  SWIGV8_RETURN_INFO(SWIGV8_UNDEFINED(), info);
+}
+
+
+static SwigV8ReturnValue _wrap_fact(const SwigV8Arguments &args) {
+  SWIGV8_HANDLESCOPE();
+  
+  v8::Handle<v8::Value> jsresult;
+  int arg1 ;
+  int val1 ;
+  int ecode1 = 0 ;
+  int result;
+  
+  if(args.Length() != 1) SWIG_exception_fail(SWIG_ERROR, "Illegal number of arguments for _wrap_fact.");
+  
+  ecode1 = SWIG_AsVal_int(args[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "fact" "', argument " "1"" of type '" "int""'");
+  } 
+  arg1 = (int)(val1);
+  result = (int)fact(arg1);
+  jsresult = SWIG_From_int((int)(result));
   
   
   SWIGV8_RETURN(jsresult);
@@ -1578,21 +1715,259 @@ fail:
 }
 
 
-static SwigV8ReturnValue _wrap_MyClass_boostTimer(const SwigV8Arguments &args) {
+static SwigV8ReturnValue _wrap_my_mod(const SwigV8Arguments &args) {
   SWIGV8_HANDLESCOPE();
   
   v8::Handle<v8::Value> jsresult;
-  MyClass *arg1 = (MyClass *) 0 ;
+  int arg1 ;
+  int arg2 ;
+  int val1 ;
+  int ecode1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  int result;
+  
+  if(args.Length() != 2) SWIG_exception_fail(SWIG_ERROR, "Illegal number of arguments for _wrap_my_mod.");
+  
+  ecode1 = SWIG_AsVal_int(args[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "my_mod" "', argument " "1"" of type '" "int""'");
+  } 
+  arg1 = (int)(val1);
+  ecode2 = SWIG_AsVal_int(args[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "my_mod" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = (int)(val2);
+  result = (int)my_mod(arg1,arg2);
+  jsresult = SWIG_From_int((int)(result));
+  
+  
+  
+  SWIGV8_RETURN(jsresult);
+  
+  goto fail;
+fail:
+  SWIGV8_RETURN(SWIGV8_UNDEFINED());
+}
+
+
+static SwigV8ReturnValue _wrap_get_time(const SwigV8Arguments &args) {
+  SWIGV8_HANDLESCOPE();
+  
+  v8::Handle<v8::Value> jsresult;
+  char *result = 0 ;
+  
+  if(args.Length() != 0) SWIG_exception_fail(SWIG_ERROR, "Illegal number of arguments for _wrap_get_time.");
+  
+  result = (char *)get_time();
+  jsresult = SWIG_FromCharPtr((const char *)result);
+  
+  SWIGV8_RETURN(jsresult);
+  
+  goto fail;
+fail:
+  SWIGV8_RETURN(SWIGV8_UNDEFINED());
+}
+
+
+static SwigV8ReturnValue _wrap_new_Rectangle(const SwigV8Arguments &args) {
+  SWIGV8_HANDLESCOPE();
+  
+  v8::Handle<v8::Object> self = args.Holder();
+  int arg1 ;
+  int arg2 ;
+  int val1 ;
+  int ecode1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  Rectangle *result;
+  if(args.Length() != 2) SWIG_exception_fail(SWIG_ERROR, "Illegal number of arguments for _wrap_new_Rectangle.");
+  ecode1 = SWIG_AsVal_int(args[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_Rectangle" "', argument " "1"" of type '" "int""'");
+  } 
+  arg1 = (int)(val1);
+  ecode2 = SWIG_AsVal_int(args[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_Rectangle" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = (int)(val2);
+  result = (Rectangle *)new Rectangle(arg1,arg2);
+  
+  
+  
+  
+  
+  SWIGV8_SetPrivateData(self, result, SWIGTYPE_p_Rectangle, SWIG_POINTER_OWN);
+  SWIGV8_RETURN(self);
+  
+  goto fail;
+fail:
+  SWIGV8_RETURN(SWIGV8_UNDEFINED());
+}
+
+
+static SwigV8ReturnValue _wrap_Rectangle_area(const SwigV8Arguments &args) {
+  SWIGV8_HANDLESCOPE();
+  
+  v8::Handle<v8::Value> jsresult;
+  Rectangle *arg1 = (Rectangle *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int result;
+  
+  if(args.Length() != 0) SWIG_exception_fail(SWIG_ERROR, "Illegal number of arguments for _wrap_Rectangle_area.");
+  
+  res1 = SWIG_ConvertPtr(args.Holder(), &argp1,SWIGTYPE_p_Rectangle, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Rectangle_area" "', argument " "1"" of type '" "Rectangle *""'"); 
+  }
+  arg1 = (Rectangle *)(argp1);
+  result = (int)(arg1)->area();
+  jsresult = SWIG_From_int((int)(result));
+  
+  
+  SWIGV8_RETURN(jsresult);
+  
+  goto fail;
+fail:
+  SWIGV8_RETURN(SWIGV8_UNDEFINED());
+}
+
+
+static SwigV8ReturnValue _wrap_Rectangle_perimeter(const SwigV8Arguments &args) {
+  SWIGV8_HANDLESCOPE();
+  
+  v8::Handle<v8::Value> jsresult;
+  Rectangle *arg1 = (Rectangle *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int result;
+  
+  if(args.Length() != 0) SWIG_exception_fail(SWIG_ERROR, "Illegal number of arguments for _wrap_Rectangle_perimeter.");
+  
+  res1 = SWIG_ConvertPtr(args.Holder(), &argp1,SWIGTYPE_p_Rectangle, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Rectangle_perimeter" "', argument " "1"" of type '" "Rectangle *""'"); 
+  }
+  arg1 = (Rectangle *)(argp1);
+  result = (int)(arg1)->perimeter();
+  jsresult = SWIG_From_int((int)(result));
+  
+  
+  SWIGV8_RETURN(jsresult);
+  
+  goto fail;
+fail:
+  SWIGV8_RETURN(SWIGV8_UNDEFINED());
+}
+
+
+static SwigV8ReturnValue _wrap_Rectangle_setWidth(const SwigV8Arguments &args) {
+  SWIGV8_HANDLESCOPE();
+  
+  v8::Handle<v8::Value> jsresult;
+  Rectangle *arg1 = (Rectangle *) 0 ;
+  int arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  
+  if(args.Length() != 1) SWIG_exception_fail(SWIG_ERROR, "Illegal number of arguments for _wrap_Rectangle_setWidth.");
+  
+  res1 = SWIG_ConvertPtr(args.Holder(), &argp1,SWIGTYPE_p_Rectangle, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Rectangle_setWidth" "', argument " "1"" of type '" "Rectangle *""'"); 
+  }
+  arg1 = (Rectangle *)(argp1);
+  ecode2 = SWIG_AsVal_int(args[0], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Rectangle_setWidth" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = (int)(val2);
+  (arg1)->setWidth(arg2);
+  jsresult = SWIGV8_UNDEFINED();
+  
+  
+  
+  SWIGV8_RETURN(jsresult);
+  
+  goto fail;
+fail:
+  SWIGV8_RETURN(SWIGV8_UNDEFINED());
+}
+
+
+#if (V8_MAJOR_VERSION-0) < 4 && (SWIG_V8_VERSION < 0x031710)
+static void _wrap_delete_Rectangle(v8::Persistent<v8::Value> object, void *parameter) {
+  SWIGV8_Proxy *proxy = static_cast<SWIGV8_Proxy *>(parameter);
+#elif (V8_MAJOR_VERSION-0) < 4 && (SWIG_V8_VERSION < 0x031900)
+  static void _wrap_delete_Rectangle(v8::Isolate *isolate, v8::Persistent<v8::Value> object, void *parameter) {
+    SWIGV8_Proxy *proxy = static_cast<SWIGV8_Proxy *>(parameter);
+#elif (V8_MAJOR_VERSION-0) < 4 && (SWIG_V8_VERSION < SWIGV8_SETWEAK_VERSION)
+    static void _wrap_delete_Rectangle(v8::Isolate *isolate, v8::Persistent< v8::Object> *object, SWIGV8_Proxy *proxy) {
+#else
+      static void _wrap_delete_Rectangle(const v8::WeakCallbackData<v8::Object, SWIGV8_Proxy> &data) {
+        v8::Local<v8::Object> object = data.GetValue();
+        SWIGV8_Proxy *proxy = data.GetParameter();
+#endif
+        
+        if(proxy->swigCMemOwn && proxy->swigCObject) {
+          Rectangle * arg1 = (Rectangle *)proxy->swigCObject;
+          delete arg1;
+        }
+        delete proxy;
+        
+#if (V8_MAJOR_VERSION-0) < 4 && (SWIG_V8_VERSION < 0x031710)
+        object.Dispose();
+#elif (V8_MAJOR_VERSION-0) < 4 && (SWIG_V8_VERSION < 0x031900)
+        object.Dispose(isolate);
+#elif (V8_MAJOR_VERSION-0) < 4 && (SWIG_V8_VERSION < 0x032100)
+        object->Dispose(isolate);
+#elif (V8_MAJOR_VERSION-0) < 4 && (SWIG_V8_VERSION < SWIGV8_SETWEAK_VERSION)
+        object->Dispose();
+#else
+        object.Clear();
+#endif
+      }
+
+
+static SwigV8ReturnValue _wrap_new_TestBoost(const SwigV8Arguments &args) {
+  SWIGV8_HANDLESCOPE();
+  
+  v8::Handle<v8::Object> self = args.Holder();
+  TestBoost *result;
+  if(args.Length() != 0) SWIG_exception_fail(SWIG_ERROR, "Illegal number of arguments for _wrap_new_TestBoost.");
+  result = (TestBoost *)new TestBoost();
+  
+  
+  
+  SWIGV8_SetPrivateData(self, result, SWIGTYPE_p_TestBoost, SWIG_POINTER_OWN);
+  SWIGV8_RETURN(self);
+  
+  goto fail;
+fail:
+  SWIGV8_RETURN(SWIGV8_UNDEFINED());
+}
+
+
+static SwigV8ReturnValue _wrap_TestBoost_boostTimer(const SwigV8Arguments &args) {
+  SWIGV8_HANDLESCOPE();
+  
+  v8::Handle<v8::Value> jsresult;
+  TestBoost *arg1 = (TestBoost *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   
-  if(args.Length() != 0) SWIG_exception_fail(SWIG_ERROR, "Illegal number of arguments for _wrap_MyClass_boostTimer.");
+  if(args.Length() != 0) SWIG_exception_fail(SWIG_ERROR, "Illegal number of arguments for _wrap_TestBoost_boostTimer.");
   
-  res1 = SWIG_ConvertPtr(args.Holder(), &argp1,SWIGTYPE_p_MyClass, 0 |  0 );
+  res1 = SWIG_ConvertPtr(args.Holder(), &argp1,SWIGTYPE_p_TestBoost, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "MyClass_boostTimer" "', argument " "1"" of type '" "MyClass *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "TestBoost_boostTimer" "', argument " "1"" of type '" "TestBoost *""'"); 
   }
-  arg1 = (MyClass *)(argp1);
+  arg1 = (TestBoost *)(argp1);
   (arg1)->boostTimer();
   jsresult = SWIGV8_UNDEFINED();
   
@@ -1605,21 +1980,21 @@ fail:
 }
 
 
-static SwigV8ReturnValue _wrap_MyClass_boostLexicalCast(const SwigV8Arguments &args) {
+static SwigV8ReturnValue _wrap_TestBoost_boostLexicalCast(const SwigV8Arguments &args) {
   SWIGV8_HANDLESCOPE();
   
   v8::Handle<v8::Value> jsresult;
-  MyClass *arg1 = (MyClass *) 0 ;
+  TestBoost *arg1 = (TestBoost *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   
-  if(args.Length() != 0) SWIG_exception_fail(SWIG_ERROR, "Illegal number of arguments for _wrap_MyClass_boostLexicalCast.");
+  if(args.Length() != 0) SWIG_exception_fail(SWIG_ERROR, "Illegal number of arguments for _wrap_TestBoost_boostLexicalCast.");
   
-  res1 = SWIG_ConvertPtr(args.Holder(), &argp1,SWIGTYPE_p_MyClass, 0 |  0 );
+  res1 = SWIG_ConvertPtr(args.Holder(), &argp1,SWIGTYPE_p_TestBoost, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "MyClass_boostLexicalCast" "', argument " "1"" of type '" "MyClass *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "TestBoost_boostLexicalCast" "', argument " "1"" of type '" "TestBoost *""'"); 
   }
-  arg1 = (MyClass *)(argp1);
+  arg1 = (TestBoost *)(argp1);
   (arg1)->boostLexicalCast();
   jsresult = SWIGV8_UNDEFINED();
   
@@ -1632,21 +2007,21 @@ fail:
 }
 
 
-static SwigV8ReturnValue _wrap_MyClass_boostDate(const SwigV8Arguments &args) {
+static SwigV8ReturnValue _wrap_TestBoost_boostDate(const SwigV8Arguments &args) {
   SWIGV8_HANDLESCOPE();
   
   v8::Handle<v8::Value> jsresult;
-  MyClass *arg1 = (MyClass *) 0 ;
+  TestBoost *arg1 = (TestBoost *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   
-  if(args.Length() != 0) SWIG_exception_fail(SWIG_ERROR, "Illegal number of arguments for _wrap_MyClass_boostDate.");
+  if(args.Length() != 0) SWIG_exception_fail(SWIG_ERROR, "Illegal number of arguments for _wrap_TestBoost_boostDate.");
   
-  res1 = SWIG_ConvertPtr(args.Holder(), &argp1,SWIGTYPE_p_MyClass, 0 |  0 );
+  res1 = SWIG_ConvertPtr(args.Holder(), &argp1,SWIGTYPE_p_TestBoost, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "MyClass_boostDate" "', argument " "1"" of type '" "MyClass *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "TestBoost_boostDate" "', argument " "1"" of type '" "TestBoost *""'"); 
   }
-  arg1 = (MyClass *)(argp1);
+  arg1 = (TestBoost *)(argp1);
   (arg1)->boostDate();
   jsresult = SWIGV8_UNDEFINED();
   
@@ -1660,21 +2035,275 @@ fail:
 
 
 #if (V8_MAJOR_VERSION-0) < 4 && (SWIG_V8_VERSION < 0x031710)
-static void _wrap_delete_MyClass(v8::Persistent<v8::Value> object, void *parameter) {
+static void _wrap_delete_TestBoost(v8::Persistent<v8::Value> object, void *parameter) {
   SWIGV8_Proxy *proxy = static_cast<SWIGV8_Proxy *>(parameter);
 #elif (V8_MAJOR_VERSION-0) < 4 && (SWIG_V8_VERSION < 0x031900)
-  static void _wrap_delete_MyClass(v8::Isolate *isolate, v8::Persistent<v8::Value> object, void *parameter) {
+  static void _wrap_delete_TestBoost(v8::Isolate *isolate, v8::Persistent<v8::Value> object, void *parameter) {
     SWIGV8_Proxy *proxy = static_cast<SWIGV8_Proxy *>(parameter);
 #elif (V8_MAJOR_VERSION-0) < 4 && (SWIG_V8_VERSION < SWIGV8_SETWEAK_VERSION)
-    static void _wrap_delete_MyClass(v8::Isolate *isolate, v8::Persistent< v8::Object> *object, SWIGV8_Proxy *proxy) {
+    static void _wrap_delete_TestBoost(v8::Isolate *isolate, v8::Persistent< v8::Object> *object, SWIGV8_Proxy *proxy) {
 #else
-      static void _wrap_delete_MyClass(const v8::WeakCallbackData<v8::Object, SWIGV8_Proxy> &data) {
+      static void _wrap_delete_TestBoost(const v8::WeakCallbackData<v8::Object, SWIGV8_Proxy> &data) {
         v8::Local<v8::Object> object = data.GetValue();
         SWIGV8_Proxy *proxy = data.GetParameter();
 #endif
         
         if(proxy->swigCMemOwn && proxy->swigCObject) {
-          MyClass * arg1 = (MyClass *)proxy->swigCObject;
+          TestBoost * arg1 = (TestBoost *)proxy->swigCObject;
+          delete arg1;
+        }
+        delete proxy;
+        
+#if (V8_MAJOR_VERSION-0) < 4 && (SWIG_V8_VERSION < 0x031710)
+        object.Dispose();
+#elif (V8_MAJOR_VERSION-0) < 4 && (SWIG_V8_VERSION < 0x031900)
+        object.Dispose(isolate);
+#elif (V8_MAJOR_VERSION-0) < 4 && (SWIG_V8_VERSION < 0x032100)
+        object->Dispose(isolate);
+#elif (V8_MAJOR_VERSION-0) < 4 && (SWIG_V8_VERSION < SWIGV8_SETWEAK_VERSION)
+        object->Dispose();
+#else
+        object.Clear();
+#endif
+      }
+
+
+static SwigV8ReturnValue _wrap_new_intRectangle(const SwigV8Arguments &args) {
+  SWIGV8_HANDLESCOPE();
+  
+  v8::Handle<v8::Object> self = args.Holder();
+  int arg1 ;
+  int arg2 ;
+  int val1 ;
+  int ecode1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  RectangleT< int > *result;
+  if(args.Length() != 2) SWIG_exception_fail(SWIG_ERROR, "Illegal number of arguments for _wrap_new_intRectangle.");
+  ecode1 = SWIG_AsVal_int(args[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_intRectangle" "', argument " "1"" of type '" "int""'");
+  } 
+  arg1 = (int)(val1);
+  ecode2 = SWIG_AsVal_int(args[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_intRectangle" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = (int)(val2);
+  result = (RectangleT< int > *)new RectangleT< int >(arg1,arg2);
+  
+  
+  
+  
+  
+  SWIGV8_SetPrivateData(self, result, SWIGTYPE_p_RectangleTT_int_t, SWIG_POINTER_OWN);
+  SWIGV8_RETURN(self);
+  
+  goto fail;
+fail:
+  SWIGV8_RETURN(SWIGV8_UNDEFINED());
+}
+
+
+static SwigV8ReturnValue _wrap_intRectangle_area(const SwigV8Arguments &args) {
+  SWIGV8_HANDLESCOPE();
+  
+  v8::Handle<v8::Value> jsresult;
+  RectangleT< int > *arg1 = (RectangleT< int > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int result;
+  
+  if(args.Length() != 0) SWIG_exception_fail(SWIG_ERROR, "Illegal number of arguments for _wrap_intRectangle_area.");
+  
+  res1 = SWIG_ConvertPtr(args.Holder(), &argp1,SWIGTYPE_p_RectangleTT_int_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "intRectangle_area" "', argument " "1"" of type '" "RectangleT< int > *""'"); 
+  }
+  arg1 = (RectangleT< int > *)(argp1);
+  result = (int)(arg1)->area();
+  jsresult = SWIG_From_int((int)(result));
+  
+  
+  SWIGV8_RETURN(jsresult);
+  
+  goto fail;
+fail:
+  SWIGV8_RETURN(SWIGV8_UNDEFINED());
+}
+
+
+static SwigV8ReturnValue _wrap_intRectangle_perimeter(const SwigV8Arguments &args) {
+  SWIGV8_HANDLESCOPE();
+  
+  v8::Handle<v8::Value> jsresult;
+  RectangleT< int > *arg1 = (RectangleT< int > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int result;
+  
+  if(args.Length() != 0) SWIG_exception_fail(SWIG_ERROR, "Illegal number of arguments for _wrap_intRectangle_perimeter.");
+  
+  res1 = SWIG_ConvertPtr(args.Holder(), &argp1,SWIGTYPE_p_RectangleTT_int_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "intRectangle_perimeter" "', argument " "1"" of type '" "RectangleT< int > *""'"); 
+  }
+  arg1 = (RectangleT< int > *)(argp1);
+  result = (int)(arg1)->perimeter();
+  jsresult = SWIG_From_int((int)(result));
+  
+  
+  SWIGV8_RETURN(jsresult);
+  
+  goto fail;
+fail:
+  SWIGV8_RETURN(SWIGV8_UNDEFINED());
+}
+
+
+#if (V8_MAJOR_VERSION-0) < 4 && (SWIG_V8_VERSION < 0x031710)
+static void _wrap_delete_intRectangle(v8::Persistent<v8::Value> object, void *parameter) {
+  SWIGV8_Proxy *proxy = static_cast<SWIGV8_Proxy *>(parameter);
+#elif (V8_MAJOR_VERSION-0) < 4 && (SWIG_V8_VERSION < 0x031900)
+  static void _wrap_delete_intRectangle(v8::Isolate *isolate, v8::Persistent<v8::Value> object, void *parameter) {
+    SWIGV8_Proxy *proxy = static_cast<SWIGV8_Proxy *>(parameter);
+#elif (V8_MAJOR_VERSION-0) < 4 && (SWIG_V8_VERSION < SWIGV8_SETWEAK_VERSION)
+    static void _wrap_delete_intRectangle(v8::Isolate *isolate, v8::Persistent< v8::Object> *object, SWIGV8_Proxy *proxy) {
+#else
+      static void _wrap_delete_intRectangle(const v8::WeakCallbackData<v8::Object, SWIGV8_Proxy> &data) {
+        v8::Local<v8::Object> object = data.GetValue();
+        SWIGV8_Proxy *proxy = data.GetParameter();
+#endif
+        
+        if(proxy->swigCMemOwn && proxy->swigCObject) {
+          RectangleT< int > * arg1 = (RectangleT< int > *)proxy->swigCObject;
+          delete arg1;
+        }
+        delete proxy;
+        
+#if (V8_MAJOR_VERSION-0) < 4 && (SWIG_V8_VERSION < 0x031710)
+        object.Dispose();
+#elif (V8_MAJOR_VERSION-0) < 4 && (SWIG_V8_VERSION < 0x031900)
+        object.Dispose(isolate);
+#elif (V8_MAJOR_VERSION-0) < 4 && (SWIG_V8_VERSION < 0x032100)
+        object->Dispose(isolate);
+#elif (V8_MAJOR_VERSION-0) < 4 && (SWIG_V8_VERSION < SWIGV8_SETWEAK_VERSION)
+        object->Dispose();
+#else
+        object.Clear();
+#endif
+      }
+
+
+static SwigV8ReturnValue _wrap_new_floatRectangle(const SwigV8Arguments &args) {
+  SWIGV8_HANDLESCOPE();
+  
+  v8::Handle<v8::Object> self = args.Holder();
+  float arg1 ;
+  float arg2 ;
+  float val1 ;
+  int ecode1 = 0 ;
+  float val2 ;
+  int ecode2 = 0 ;
+  RectangleT< float > *result;
+  if(args.Length() != 2) SWIG_exception_fail(SWIG_ERROR, "Illegal number of arguments for _wrap_new_floatRectangle.");
+  ecode1 = SWIG_AsVal_float(args[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_floatRectangle" "', argument " "1"" of type '" "float""'");
+  } 
+  arg1 = (float)(val1);
+  ecode2 = SWIG_AsVal_float(args[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_floatRectangle" "', argument " "2"" of type '" "float""'");
+  } 
+  arg2 = (float)(val2);
+  result = (RectangleT< float > *)new RectangleT< float >(arg1,arg2);
+  
+  
+  
+  
+  
+  SWIGV8_SetPrivateData(self, result, SWIGTYPE_p_RectangleTT_float_t, SWIG_POINTER_OWN);
+  SWIGV8_RETURN(self);
+  
+  goto fail;
+fail:
+  SWIGV8_RETURN(SWIGV8_UNDEFINED());
+}
+
+
+static SwigV8ReturnValue _wrap_floatRectangle_area(const SwigV8Arguments &args) {
+  SWIGV8_HANDLESCOPE();
+  
+  v8::Handle<v8::Value> jsresult;
+  RectangleT< float > *arg1 = (RectangleT< float > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  float result;
+  
+  if(args.Length() != 0) SWIG_exception_fail(SWIG_ERROR, "Illegal number of arguments for _wrap_floatRectangle_area.");
+  
+  res1 = SWIG_ConvertPtr(args.Holder(), &argp1,SWIGTYPE_p_RectangleTT_float_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "floatRectangle_area" "', argument " "1"" of type '" "RectangleT< float > *""'"); 
+  }
+  arg1 = (RectangleT< float > *)(argp1);
+  result = (float)(arg1)->area();
+  jsresult = SWIG_From_float((float)(result));
+  
+  
+  SWIGV8_RETURN(jsresult);
+  
+  goto fail;
+fail:
+  SWIGV8_RETURN(SWIGV8_UNDEFINED());
+}
+
+
+static SwigV8ReturnValue _wrap_floatRectangle_perimeter(const SwigV8Arguments &args) {
+  SWIGV8_HANDLESCOPE();
+  
+  v8::Handle<v8::Value> jsresult;
+  RectangleT< float > *arg1 = (RectangleT< float > *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  float result;
+  
+  if(args.Length() != 0) SWIG_exception_fail(SWIG_ERROR, "Illegal number of arguments for _wrap_floatRectangle_perimeter.");
+  
+  res1 = SWIG_ConvertPtr(args.Holder(), &argp1,SWIGTYPE_p_RectangleTT_float_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "floatRectangle_perimeter" "', argument " "1"" of type '" "RectangleT< float > *""'"); 
+  }
+  arg1 = (RectangleT< float > *)(argp1);
+  result = (float)(arg1)->perimeter();
+  jsresult = SWIG_From_float((float)(result));
+  
+  
+  SWIGV8_RETURN(jsresult);
+  
+  goto fail;
+fail:
+  SWIGV8_RETURN(SWIGV8_UNDEFINED());
+}
+
+
+#if (V8_MAJOR_VERSION-0) < 4 && (SWIG_V8_VERSION < 0x031710)
+static void _wrap_delete_floatRectangle(v8::Persistent<v8::Value> object, void *parameter) {
+  SWIGV8_Proxy *proxy = static_cast<SWIGV8_Proxy *>(parameter);
+#elif (V8_MAJOR_VERSION-0) < 4 && (SWIG_V8_VERSION < 0x031900)
+  static void _wrap_delete_floatRectangle(v8::Isolate *isolate, v8::Persistent<v8::Value> object, void *parameter) {
+    SWIGV8_Proxy *proxy = static_cast<SWIGV8_Proxy *>(parameter);
+#elif (V8_MAJOR_VERSION-0) < 4 && (SWIG_V8_VERSION < SWIGV8_SETWEAK_VERSION)
+    static void _wrap_delete_floatRectangle(v8::Isolate *isolate, v8::Persistent< v8::Object> *object, SWIGV8_Proxy *proxy) {
+#else
+      static void _wrap_delete_floatRectangle(const v8::WeakCallbackData<v8::Object, SWIGV8_Proxy> &data) {
+        v8::Local<v8::Object> object = data.GetValue();
+        SWIGV8_Proxy *proxy = data.GetParameter();
+#endif
+        
+        if(proxy->swigCMemOwn && proxy->swigCObject) {
+          RectangleT< float > * arg1 = (RectangleT< float > *)proxy->swigCObject;
           delete arg1;
         }
         delete proxy;
@@ -1695,19 +2324,31 @@ static void _wrap_delete_MyClass(v8::Persistent<v8::Value> object, void *paramet
 
 /* -------- TYPE CONVERSION AND EQUIVALENCE RULES (BEGIN) -------- */
 
-static swig_type_info _swigt__p_MyClass = {"_p_MyClass", "MyClass *|p_MyClass", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_Rectangle = {"_p_Rectangle", "Rectangle *|p_Rectangle", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_RectangleTT_float_t = {"_p_RectangleTT_float_t", "RectangleT< float > *|p_RectangleTT_float_t", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_RectangleTT_int_t = {"_p_RectangleTT_int_t", "p_RectangleTT_int_t|RectangleT< int > *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_TestBoost = {"_p_TestBoost", "p_TestBoost|TestBoost *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_char = {"_p_char", "char *", 0, 0, (void*)0, 0};
 
 static swig_type_info *swig_type_initial[] = {
-  &_swigt__p_MyClass,
+  &_swigt__p_Rectangle,
+  &_swigt__p_RectangleTT_float_t,
+  &_swigt__p_RectangleTT_int_t,
+  &_swigt__p_TestBoost,
   &_swigt__p_char,
 };
 
-static swig_cast_info _swigc__p_MyClass[] = {  {&_swigt__p_MyClass, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_Rectangle[] = {  {&_swigt__p_Rectangle, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_RectangleTT_float_t[] = {  {&_swigt__p_RectangleTT_float_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_RectangleTT_int_t[] = {  {&_swigt__p_RectangleTT_int_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_TestBoost[] = {  {&_swigt__p_TestBoost, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_char[] = {  {&_swigt__p_char, 0, 0, 0},{0, 0, 0, 0}};
 
 static swig_cast_info *swig_cast_initial[] = {
-  _swigc__p_MyClass,
+  _swigc__p_Rectangle,
+  _swigc__p_RectangleTT_float_t,
+  _swigc__p_RectangleTT_int_t,
+  _swigc__p_TestBoost,
   _swigc__p_char,
 };
 
@@ -2012,39 +2653,91 @@ void SWIGV8_INIT (v8::Handle<v8::Object> exports, v8::Handle<v8::Object> /*modul
   
 
   /* create class templates */
-  /* Name: _exports_MyClass, Type: p_MyClass, Dtor: _wrap_delete_MyClass */
-v8::Handle<v8::FunctionTemplate> _exports_MyClass_class = SWIGV8_CreateClassTemplate("_exports_MyClass");
-SWIGV8_SET_CLASS_TEMPL(_exports_MyClass_clientData.class_templ, _exports_MyClass_class);
-_exports_MyClass_clientData.dtor = _wrap_delete_MyClass;
-if (SWIGTYPE_p_MyClass->clientdata == 0) {
-  SWIGTYPE_p_MyClass->clientdata = &_exports_MyClass_clientData;
+  /* Name: _exports_Rectangle, Type: p_Rectangle, Dtor: _wrap_delete_Rectangle */
+v8::Handle<v8::FunctionTemplate> _exports_Rectangle_class = SWIGV8_CreateClassTemplate("_exports_Rectangle");
+SWIGV8_SET_CLASS_TEMPL(_exports_Rectangle_clientData.class_templ, _exports_Rectangle_class);
+_exports_Rectangle_clientData.dtor = _wrap_delete_Rectangle;
+if (SWIGTYPE_p_Rectangle->clientdata == 0) {
+  SWIGTYPE_p_Rectangle->clientdata = &_exports_Rectangle_clientData;
+}
+/* Name: _exports_TestBoost, Type: p_TestBoost, Dtor: _wrap_delete_TestBoost */
+v8::Handle<v8::FunctionTemplate> _exports_TestBoost_class = SWIGV8_CreateClassTemplate("_exports_TestBoost");
+SWIGV8_SET_CLASS_TEMPL(_exports_TestBoost_clientData.class_templ, _exports_TestBoost_class);
+_exports_TestBoost_clientData.dtor = _wrap_delete_TestBoost;
+if (SWIGTYPE_p_TestBoost->clientdata == 0) {
+  SWIGTYPE_p_TestBoost->clientdata = &_exports_TestBoost_clientData;
+}
+/* Name: _exports_intRectangle, Type: p_RectangleTT_int_t, Dtor: _wrap_delete_intRectangle */
+v8::Handle<v8::FunctionTemplate> _exports_intRectangle_class = SWIGV8_CreateClassTemplate("_exports_intRectangle");
+SWIGV8_SET_CLASS_TEMPL(_exports_intRectangle_clientData.class_templ, _exports_intRectangle_class);
+_exports_intRectangle_clientData.dtor = _wrap_delete_intRectangle;
+if (SWIGTYPE_p_RectangleTT_int_t->clientdata == 0) {
+  SWIGTYPE_p_RectangleTT_int_t->clientdata = &_exports_intRectangle_clientData;
+}
+/* Name: _exports_floatRectangle, Type: p_RectangleTT_float_t, Dtor: _wrap_delete_floatRectangle */
+v8::Handle<v8::FunctionTemplate> _exports_floatRectangle_class = SWIGV8_CreateClassTemplate("_exports_floatRectangle");
+SWIGV8_SET_CLASS_TEMPL(_exports_floatRectangle_clientData.class_templ, _exports_floatRectangle_class);
+_exports_floatRectangle_clientData.dtor = _wrap_delete_floatRectangle;
+if (SWIGTYPE_p_RectangleTT_float_t->clientdata == 0) {
+  SWIGTYPE_p_RectangleTT_float_t->clientdata = &_exports_floatRectangle_clientData;
 }
 
 
   /* register wrapper functions */
-  SWIGV8_AddMemberFunction(_exports_MyClass_class, "sayHello", _wrap_MyClass_sayHello);
-SWIGV8_AddMemberFunction(_exports_MyClass_class, "boostTimer", _wrap_MyClass_boostTimer);
-SWIGV8_AddMemberFunction(_exports_MyClass_class, "boostLexicalCast", _wrap_MyClass_boostLexicalCast);
-SWIGV8_AddMemberFunction(_exports_MyClass_class, "boostDate", _wrap_MyClass_boostDate);
+  SWIGV8_AddStaticVariable(exports_obj, "My_variable", _wrap_My_variable_get, _wrap_My_variable_set);
+SWIGV8_AddMemberFunction(_exports_Rectangle_class, "area", _wrap_Rectangle_area);
+SWIGV8_AddMemberFunction(_exports_Rectangle_class, "perimeter", _wrap_Rectangle_perimeter);
+SWIGV8_AddMemberFunction(_exports_Rectangle_class, "setWidth", _wrap_Rectangle_setWidth);
+SWIGV8_AddMemberFunction(_exports_TestBoost_class, "boostTimer", _wrap_TestBoost_boostTimer);
+SWIGV8_AddMemberFunction(_exports_TestBoost_class, "boostLexicalCast", _wrap_TestBoost_boostLexicalCast);
+SWIGV8_AddMemberFunction(_exports_TestBoost_class, "boostDate", _wrap_TestBoost_boostDate);
+SWIGV8_AddMemberFunction(_exports_intRectangle_class, "area", _wrap_intRectangle_area);
+SWIGV8_AddMemberFunction(_exports_intRectangle_class, "perimeter", _wrap_intRectangle_perimeter);
+SWIGV8_AddMemberFunction(_exports_floatRectangle_class, "area", _wrap_floatRectangle_area);
+SWIGV8_AddMemberFunction(_exports_floatRectangle_class, "perimeter", _wrap_floatRectangle_perimeter);
 
 
   /* setup inheritances */
   
 
   /* class instances */
-  /* Class: MyClass (_exports_MyClass) */
-v8::Handle<v8::FunctionTemplate> _exports_MyClass_class_0 = SWIGV8_CreateClassTemplate("MyClass");
-_exports_MyClass_class_0->SetCallHandler(_wrap_new_MyClass);
-_exports_MyClass_class_0->Inherit(_exports_MyClass_class);
-_exports_MyClass_class_0->SetHiddenPrototype(true);
-v8::Handle<v8::Object> _exports_MyClass_obj = _exports_MyClass_class_0->GetFunction();
+  /* Class: Rectangle (_exports_Rectangle) */
+v8::Handle<v8::FunctionTemplate> _exports_Rectangle_class_0 = SWIGV8_CreateClassTemplate("Rectangle");
+_exports_Rectangle_class_0->SetCallHandler(_wrap_new_Rectangle);
+_exports_Rectangle_class_0->Inherit(_exports_Rectangle_class);
+_exports_Rectangle_class_0->SetHiddenPrototype(true);
+v8::Handle<v8::Object> _exports_Rectangle_obj = _exports_Rectangle_class_0->GetFunction();
+/* Class: TestBoost (_exports_TestBoost) */
+v8::Handle<v8::FunctionTemplate> _exports_TestBoost_class_0 = SWIGV8_CreateClassTemplate("TestBoost");
+_exports_TestBoost_class_0->SetCallHandler(_wrap_new_TestBoost);
+_exports_TestBoost_class_0->Inherit(_exports_TestBoost_class);
+_exports_TestBoost_class_0->SetHiddenPrototype(true);
+v8::Handle<v8::Object> _exports_TestBoost_obj = _exports_TestBoost_class_0->GetFunction();
+/* Class: intRectangle (_exports_intRectangle) */
+v8::Handle<v8::FunctionTemplate> _exports_intRectangle_class_0 = SWIGV8_CreateClassTemplate("intRectangle");
+_exports_intRectangle_class_0->SetCallHandler(_wrap_new_intRectangle);
+_exports_intRectangle_class_0->Inherit(_exports_intRectangle_class);
+_exports_intRectangle_class_0->SetHiddenPrototype(true);
+v8::Handle<v8::Object> _exports_intRectangle_obj = _exports_intRectangle_class_0->GetFunction();
+/* Class: floatRectangle (_exports_floatRectangle) */
+v8::Handle<v8::FunctionTemplate> _exports_floatRectangle_class_0 = SWIGV8_CreateClassTemplate("floatRectangle");
+_exports_floatRectangle_class_0->SetCallHandler(_wrap_new_floatRectangle);
+_exports_floatRectangle_class_0->Inherit(_exports_floatRectangle_class);
+_exports_floatRectangle_class_0->SetHiddenPrototype(true);
+v8::Handle<v8::Object> _exports_floatRectangle_obj = _exports_floatRectangle_class_0->GetFunction();
 
 
   /* add static class functions and variables */
-  
+  SWIGV8_AddStaticFunction(exports_obj, "fact", _wrap_fact);
+SWIGV8_AddStaticFunction(exports_obj, "my_mod", _wrap_my_mod);
+SWIGV8_AddStaticFunction(exports_obj, "get_time", _wrap_get_time);
+
 
   /* register classes */
-  exports_obj->Set(SWIGV8_SYMBOL_NEW("MyClass"), _exports_MyClass_obj);
+  exports_obj->Set(SWIGV8_SYMBOL_NEW("Rectangle"), _exports_Rectangle_obj);
+exports_obj->Set(SWIGV8_SYMBOL_NEW("TestBoost"), _exports_TestBoost_obj);
+exports_obj->Set(SWIGV8_SYMBOL_NEW("intRectangle"), _exports_intRectangle_obj);
+exports_obj->Set(SWIGV8_SYMBOL_NEW("floatRectangle"), _exports_floatRectangle_obj);
 
 
   /* create and register namespace objects */

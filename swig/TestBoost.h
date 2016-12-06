@@ -9,14 +9,10 @@
 #include <boost/array.hpp>
 //#include <boost/progress.hpp>
 
-class MyClass {
-        int myNumber;
+class TestBoost {
+       
 public:
-        MyClass(int number): myNumber(number){}
-        
-        void sayHello() {
-            std::cout << "Hello, my number is:" << myNumber <<std::endl;
-        }
+        TestBoost(){}
        
         void boostTimer(){
         	boost::timer t;                        // declare timer 		start counting

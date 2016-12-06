@@ -1,0 +1,24 @@
+Static Vs. Shared
+Many of the libraries ues
+
+Why:
+Printing something to the scren.
+
+What:
+A library is just a file, consistes of 1 and 0.
+
+The difference you can not execute your library
+
+Application execute but they use library.
+
+How do they work:
+Share libraries
+.so .dll .dylib
+
+The difference of Share libraries and Static libraries
+ShareL run time
+StaticL compl time
+Positive points and negative points of each
+
+
+
