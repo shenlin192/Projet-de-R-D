@@ -1,0 +1,46 @@
+%-----------------------------------------------------------
+This chapter is divided by 5 sections. Firstly we will talk about the statement of the problem, and then objectives of the project. After that, the work achieved and contribution are presented. At the end, the organisation of this report will be shown.
+
+\section{Statement of the problem}
+
+DGtal\footnote{http://dgtal.org/} is a collaborative free project that aims to develop a set of efficient and generic algorithms in the field of discrete geometry. DGtal is presented in the form of a software library, documented and accompanied by sample codes, supplemented by extensions dedicated to specific applications (DGtalTools). DGtal is developed in C ++ and relies heavily on the free libraries Boost\footnote{http://www.boost.org/}. There is currently no tool to automate tasks or manipulate the library interactively. Using DGtal requires the development of a C ++ code, its compilation and then its execution.
+
+\section{Objectives}
+
+This project consists of equipping DGtal with a JavaScript command interpreter, invoked from nodejs\footnote{https://nodejs.org/en/} capable of:\newline
+- create objects from the library (e.g. a discrete point, a line ...)\newline
+- to import and export representations of these objects,\newline
+- manipulate the objects by invoking the algorithms of the library,\newline
+- automate processes by executing complex commands or scripts.\newline
+DGtal is a constantly evolving library. This is to propose a perennial method, not limited to a particular version of DGtal. JavaScript support must follow the evolutions of the code.
+
+\section{Work achieved}
+
+As mentioned before, the goal of this project is to equipe DGtal with a JavaScript command interpreter. So first and foremost, we have to find a way to "link" or "connect" JavaScript codes with C++ codes. That's what we have been doing from the beginning of the project until now.
+
+We have successfully used three node modules\footnote{https://github.com/node-ffi/node-ffi/wiki/Node-FFI-Tutorial} ("ffi", "ref", "ref-struct") to invoke functions in share objects (also called dynamic link library), which are generated automatically by C++ code. Moreover, after numbers of experiments, we have validated that this works well with C++ basic codes, C++ codes using templates as well as C++ codes using "boost".  
+
+The newest discovery is, we have found that by using the latest versions of "SWIG"\footnote{http://www.swig.org/Doc3.0/Javascript.html} , we may be able to achieve the same goal in a much easier way. And we have also validated this tool works well with basic C++ codes, template C++ codes and most parts of "boost".
+
+\section{Contribution}
+
+In brief, after two months work, we have found two possible solutions to our project. One is the foreign function interface (FFI) module of NodeJs. The other one is the software development tool "SWIG". Each of them can be used to invoke C++ written functions in JavaScript.  
+
+\section{Report organisation}
+
+The overall picture of this report is drawn as following.
+
+Chapter~\ref{chap:Conceptions} studies the basic concepts and techniques behind those two possible solutions mentioned before. For example, concepts like shared library, static library, abstract syntax tree, application binary interface will be discussed. 
+
+Chapter~\ref{chap:Proposals} studies, from the theoretical point of view, that two possible solutions for this project. The consequences of the established and chosen hypotheses are pursued to the point only experiments can give satisfying answers.
+
+Chapter~\ref{chap:Experiments} shows how to build the developing environment, how to reproduce our experimental results, and analysis of the experiments.
+
+Finally, the conclusion summarises the work and introduce new research issues that are worth pursuing
+
+%--------------------------------------------------Contents1  Introduction41.1Statement of the problem  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .41.2Objectives  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .41.3Work achieved    .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .51.4Contribution .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .51.5Report organisation  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .52  Conceptions62.1Abstract Syntax Tree   .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .62.2Previous Proposal 1  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .72.3Previous Proposal 2  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .72.4Synthesis   .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .72.5Conclusion    .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .73  Proposals93.1Proposal 1  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .93.2Proposal 1  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .93.3Conclusion    .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .94  Experiments and Results105  Conclusion11A  Schedule15B  Weekly Reports17C  Self-assessment223---------------------------------------
+--------------------
+% \part{State-of-the-Art} % Comment it out if the state-of-the-art requires several chapters.
+                          % Most often, you'll then have a presentation chapter followed by a critical synthesis chapter.
+                          % In that case, you must commen tour your work part, hereafter.
+% \label{part:StateOfTheArt}

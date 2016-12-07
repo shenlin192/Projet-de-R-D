@@ -1,0 +1,254 @@
+\label{ann:WeeklyReports}
+
+
+\begin{fichesuivi}{October 10, 2016}{October 16, 2016}
+   \tempstravailA{10}{30}
+  
+   \begin{travaileffectue}
+      \begin{itemize}
+         \item Task 1: Familiar with the Linux system
+         \item Task 2: Install node js
+         \item Task 3: Test the functionality of ffi with a script called "printf.js" given by monsieur Nicolas Normand 
+         \item Task 4: Install DGtal
+      \end{itemize}
+   \end{travaileffectue}
+
+   \begin{travailnoneffectue}
+      \begin{itemize}
+         \item Task 1:  Discuss the general plan with monsieur Nicolas (we can't find a time that both he and me are available)
+      \end{itemize}
+   \end{travailnoneffectue}
+
+\begin{comment}
+   \begin{echange}
+      \begin{itemize}
+         \item Questions;
+         \item Answers;
+         \item Clarification, comprehension;
+         \item Choices, orientations, reorientations;
+         \item Etc.
+      \end{itemize}
+   \end{echange}
+\end{comment}
+
+   \begin{planification}
+      \begin{itemize}
+         \item Discuss the general plan with monsieur Nicolas
+      \end{itemize}
+   \end{planification}
+\end{fichesuivi}
+
+
+
+
+
+
+\begin{fichesuivi}{October 17, 2016}{October 23, 2016}
+   \tempstravailA{11}{00}
+
+   \begin{travaileffectue}
+     \begin{itemize}
+         \item Task 1: In the meeting with monsieur Nicolas Normand, we have decided to start our project from studying the Documentation of DGtal
+         \item Task 2: I've tried some simple examples of DGtal and it works well in pure C++ environment
+      \end{itemize}
+   \end{travaileffectue}
+
+   \begin{travailnoneffectue}
+        \begin{itemize}
+         \item Studying the documentation of DGtal (The documentation is not easy to understand, I've just finished a little part)
+      \end{itemize}
+   \end{travailnoneffectue}
+
+   \begin{planification}
+       \begin{itemize}
+         \item study the documentation of DGtal
+         \item Find a way to connect NodeJs with DGtal
+       \end{itemize}
+   \end{planification}
+\end{fichesuivi}
+
+
+
+
+
+
+\begin{fichesuivi}{October 24, 2016}{October 30, 2016}
+   \tempstravailA{11}{20}
+
+   \begin{travaileffectue}
+     \begin{itemize}
+         \item Learned how to use "cmake" to generate the ".so" files and "executable" files from ".cpp" source files
+         \item Created a simple class in C++. And the simplest functions(input types and output types are something like "int" "double" but not reference or object) in that class can be used in NodeJs thanks to its FFI
+       \end{itemize}
+   \end{travaileffectue}
+
+   \begin{travailnoneffectue}
+     \begin{itemize}
+         \item Study of Documentation of DGtal (I was focus on the FFI and Cmake, so no time for the documentation)
+       \end{itemize}
+   \end{travailnoneffectue}
+   
+   \begin{planification}
+         \begin{itemize}
+         \item Solve the problem of using functions written in C++ ,that have return types like "reference" or "object", with JavaScript
+         \item continue to study DGtal
+       \end{itemize}
+   \end{planification}
+\end{fichesuivi}
+
+
+
+
+
+%semaine 4
+\begin{fichesuivi}{October 31, 2016}{November 6, 2016}
+   \tempstravailA{10}{30}
+
+   \begin{travaileffectue}
+       \begin{itemize}
+           \item Monsieur Nicolas and me, we have solved the problems of using functions, written in c++ that have return types like "reference" or "object", with JavaScript
+           \item Start to study the c++ template
+       \end{itemize}
+   \end{travaileffectue}
+
+   \begin{travailnoneffectue}
+        \begin{itemize}
+             \item Study of DGtal(Monsieur Nicolas and me think it's better to leave DGtal alone before finishing the test of "template", "boost" of c++)
+       \end{itemize}
+   \end{travailnoneffectue}
+
+   \begin{planification}
+        \begin{itemize}
+            \item Find a way to use constructors written in a c++ class directly with JavaScript.
+            \item Test the boost library
+            \item Learn the concept of ABI, AST, dynamic and static links
+        \end{itemize}
+   \end{planification}
+\end{fichesuivi}
+
+
+
+
+\begin{fichesuivi}{November 7, 2016}{November 13, 2016}
+   \tempstravailA{12}{00}
+
+   \begin{travaileffectue}
+      \begin{itemize}
+             \item Successfully using constructors, which are created by a ".cpp" file, in the envirnment of NodeJs.  We have found some solutions, for example, 'new' a 'structure' by JavaScript and then send the 'buffer' of the structure to the constructor written by C++.
+     \end{itemize}
+   \end{travaileffectue}
+
+   \begin{travailnoneffectue}
+     \begin{itemize}
+         \item Test of the boost library (No time)
+         \item Learn the concept of ABI, AST, dynamic and static links (No time)
+       \end{itemize}
+   \end{travailnoneffectue}
+
+   \begin{planification}
+        \begin{itemize}
+         \item Try to use the mechanism of template in ".cpp" files and than called the template functions(including global functions, member functions in a class and constructor in a class) with nodeJs
+         \item Test of the boost library 
+         \item Learn the concept of ABI, AST, dynamic and static links 
+       \end{itemize}
+   \end{planification}
+   
+\end{fichesuivi}
+
+
+
+
+\begin{fichesuivi}{November 14, 2016}{November 20, 2016}
+   \tempstravailA{4}{00}
+
+   \begin{travaileffectue}
+        \begin{itemize}
+            \item Learn the concept of ABI, AST, dynamic and static
+            \item Learn to use Latex for the report and bibiography
+            \item Validation of the test of template with different types ("int", "long", "double"...)
+        \end{itemize}
+   \end{travaileffectue}
+
+   \begin{travailnoneffectue}
+          \begin{itemize}
+             \item Test of the boost library (No time) 
+          \end{itemize}
+   \end{travailnoneffectue}
+
+   \begin{planification}
+        \begin{itemize}
+            \item Test of the boost library
+            \item Begin to write the report
+            \item Discuss with monsieur Nicolas for the questions about ABI and clang
+            \item Continue to study ABI and try to make a link of ABI with our project
+        \end{itemize}
+   \end{planification}
+\end{fichesuivi}
+
+
+
+
+\begin{fichesuivi}{November 21, 2016}{November 26, 2016}
+   \tempstravailA{15}{00}
+
+   \begin{travaileffectue}
+        \begin{itemize}
+            \item I've found something really interesting this week. It's "swig". With the newest version of "swig", we are able to easily call the functions written by c++ in the JavaScript files. And we don't need to use FFI, neither do we need to generate the c++ share objects.
+            \item Monsieur Nicolas and me, we have discussed about the general plan of our project, the report that I need to write and the soutenance for the next week.
+        \end{itemize}
+   \end{travaileffectue}
+
+   \begin{travailnoneffectue}
+        \begin{itemize}
+            \item The report is not yet begin to write, for I've spent a lot of time trying to find a new way, a more easy way to achieve the goal of our project. And I do found "swig", but we need more time to study it.
+        \end{itemize}
+   \end{travailnoneffectue}
+
+   \begin{planification}
+        As the report is not yet start and the deadline is coming, I'm going to stop my research as well as my tests for a while and finish the report next week
+        \begin{itemize}
+            \item Complete the documentation of our project 
+            \item Complete the report
+            \item Prepare for the soutenance
+        \end{itemize}
+   \end{planification}
+\end{fichesuivi}
+ 
+
+
+
+\begin{fichesuivi}{November 27, 2016}{December 3, 2016}
+   \tempstravailA{25}{00}
+
+   \begin{travaileffectue}
+        \begin{itemize}
+            \item Writting the report
+            \item Learned some Latex skills in order to write this report
+        \end{itemize}
+   \end{travaileffectue}
+
+   \begin{travailnoneffectue}
+        \begin{itemize}
+            \item The report is not yet finish. (Writting the whole report all alone kills me)
+            \item Prepare for the soutenance (No time)
+        \end{itemize}
+   \end{travailnoneffectue}
+
+ 
+   \begin{planification}
+        \begin{itemize}
+            \item Continue to write the report
+            \item Prepare for the soutenance
+        \end{itemize}
+   \end{planification}
+\end{fichesuivi}
+
+\begin{comment}
+   The summary table of work dedicated to the project is \emph{mandatory}.
+If you do not use the provided weekly report sheets, you must establish the summary by yourself.
+Otherwise, the simple command that follows in the source code (\verb+\printweeksummary+) does all the job of generating the table along with all the hyperlinks to the weekly reports.
+
+\end{comment}
+
+
+\printweeksummary

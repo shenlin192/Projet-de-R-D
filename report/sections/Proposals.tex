@@ -1,0 +1,61 @@
+\label{chap:Proposals}
+
+As mentioned in the chapter of introduction, we have already found 2 possible solutions to our project. One is to use the Node FFI model and the othe SWIG.
+
+\section{Node FFI}
+
+The idea of using Node FFI to solve our problem is like:
+\begin{itemize}
+   \item Step 1: Create a C++ source file that contains or include all the functions that we may want to use lately.
+   \item Step 2: Use the "make" tool to generate a shared object (a dynamic link library) for the source file that we created previously.
+   \item Step 3: Invoke functions in the shared object from JavaScript files with the help of Node FFI model. \newline
+\end{itemize}
+
+By following the 3 steps above, we can successfully invoke C++ functions in JavaScript. It's very close to our objective. Create objects from DGtal would be done by invoking a constructor function. Manipulate the DGtal objects would be done by invoking algorithms of the library. The most difficult part is how to automate processes by executing complex commands or scripts. The AST may be helpful. We will see.
+
+
+\section{SWIG}
+The idea of using SWIG is like:
+    \begin{itemize}
+       \item Step 1: Create a C++ source file just like step 1 of using Node FFI.
+       \item Step 2: In order to use the functions defined or included by the source file in node, we simply need to write a SWIG interface file.
+       \item Step 3: Create a binding file in order to generate the wrapped code.
+       \item Step 4: Generate a node library by using command line
+       \item Step 5: "require" the generated node library, and then we can invoke all the functions in the source file created by step 1 \newline
+    \end{itemize}
+    
+The functionality of using SWIG is similar to Node FFI. However, the main advantage of using SWIG is the usage of a node library with JavaScript is much simpler than the usage of a foreign function interface with JavaScript. Namely, the method has lower programming complexity. 
+
+\section{Conclusion}
+Comparison of different aspects of the 2 possible solutions proposed above is given in table  \ref{tab:ProposalsComparison}
+
+\begin{table*} % Use the starred version if the table is too large for a two-column document (screen version)
+    \begin{center}
+        \begin{tabular}{c|ccccc}
+                                     & Node FFI & SWIG  \\
+            \hline
+            Programming Complexity   &          &$\surd$ \\  
+            
+            Basic warpping           &  $\surd$  &$\surd$ \\ 
+            
+            Support of Boost         & $\surd$  &$\approx$\\
+            
+            Support of template      &  $\surd$  &$\surd$ \\
+                        
+            Name mangling            &           &$\surd$ \\ 
+             
+        \end{tabular}
+    \end{center}
+    \caption{Comparison of various proposals}
+    \label{tab:ProposalsComparison}
+\end{table*}
+
+\begin{comment}
+If too many ideas have been enumerated and none can be totally and formally demonstrated to be the best, then some choice has probably to bemade in order to limit the time-consuming experiments that follow.  It is preferable to achieve a few well-conducted experiments that will provide unquestionable conclusions though in a limited scope.
+\end{comment}
+
+
+%--------------------------------------------------------------------------------
+
+%\part{Experiments and Results} % in case of several chapters, then name the chapters differently
+%\label{part:Experiments}
