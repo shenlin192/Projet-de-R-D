@@ -1,0 +1,26 @@
+#% Do not delete the line below; configure depends on this
+#  \DeclareLaTeXClass{report-rd-info}
+# Report textclass definition file. Taken from initial LyX source code
+# Author : Matthias Ettrich <ettrich@informatik.uni-tuebingen.de>
+# Transposed by Pascal André <andre@via.ecp.fr>
+# Heavily modifed and enhanced by several developers.
+
+Format 35
+Input stdclass.inc
+Input numreport.inc
+
+Style Bibliography
+	TopSep                4
+	LabelString           "Bibliography"
+	LabelFont
+	  Series              Bold
+	  Size                Huge
+	EndFont
+End
+
+Style Remerciements
+  CopyStyle		Abstract
+  LatexName		acknowledgements
+  LabelString	"Remerciements"
+End
+

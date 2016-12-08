@@ -1,0 +1,148 @@
+\documentclass[11pt, english, screen, research-development]{report-rd-info}
+   % - 11pt:  12pt can be preferable to read the report on small screens, ask your supervisors
+   % - screen:  to be removed in order to obtain a classical report
+   % - research-development:  to be replaced either by 'research' alone, or 'development' alone, or even 'intelligence', depending on the classification given to you by the committee at the end of the project
+\usepackage[latin1]{inputenc}
+   % - latin9, utf8, etc.
+\usepackage[T1]{fontenc}
+
+
+% some definitions for the actual contents
+\usepackage{enumerate}
+\usepackage{amsmath, amssymb}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+\usepackage{minted}
+\usepackage{subfiles}
+
+\begin{document}
+
+\title{Integration of a JavaScript interpreter in DGtal}
+%\subtitle{A Model and Short Guide}
+\authorA{Lin}{SHEN}
+
+\supervisor{Nicolas}{NORMAND}
+  % In case, there are more than two supervisors, use the following trick:
+   %    \cosupervisor{Jean}{Cadre \& {\normalfont Still} Another}
+%\institution{LINA}
+   % - LINA when you're supervised by members of the research teams GRIM or COD (may be some others);
+   % - IRCCyN when youre supervised by members of the research team IVC;
+   % - XXX when supervised by another organism
+   %   (In that case, you have to provide, in the "logos" directories, the files named: XXX.pdf -- if not XXX.jpeg or XXX.png -- for pdflatex *and* XXX.eps for latex);
+   % - otherwise comment it
+%\theme{\'Equipe DUKE}
+   % - optionally provide it when an institution has been declared (DUKE or IVC for the local research teams)
+   % - otherwise comment it
+%\coinstitution{Centre national de la recherche scientifique}{CNRS}{1.7cm}
+   % - if you need to add a partner
+   % - the logo must be provided, e.g., CNRS.pdf here
+   % - the third parameter allows one to control the width of the logo in order to make
+   %   it look of the same size of the one from the university of nantes and possibly the laboratory
+\date{November 25, 2016}
+   % - do not had un 0 in front of the first to ninth day of a mont!
+   % - you can altogether ignore the day.
+
+%-------------------------------------------------------------------------------------------------------------
+
+
+\begin{abstract}
+%\small % Comment it out should the abstract by slightly too long to fit in the page.
+\textit{Keywords}: DGtal, JavaScript, C++, interpreter
+    \begin{comment}
+    
+   As the name suggests, the abstract is a very short but informative piece of information about everything you did in this work, i.e., successively the description of the problem at hand, the objectives, the main point of the state-of-the-art, the choices made, the conceptual developments, the conducted experiments, results and interpretations, the new issues.
+
+   It is the last thing to write!
+   (Do not provide any details, give popular scientific information.  The introduction and conclusion of the report are there to develop the overall ideas.)
+   \end{comment}
+\end{abstract}
+
+\begin{classification}
+     \begin{comment}
+%\small % Idem
+   Bibliographic indexing is required. Use the ACM thesaurus:  See \url{http://www.acm.org/about/class/}. (The following example is based on the 1998 version, where general terms and additional key words are optional.)
+
+   \category{H.2.8}{Database Applications}{Image databases}
+   \category{H.3.3}{Information Search and Retrieval}{Clustering, Information filtering, Relevance feedback}
+   \category{H.3.7}{Digital Libraries}{User issues}
+   \category{I.5.3}{Clustering}{Algorithms, Similarity measures}
+   \category{I.4.10}{Image Representation}{Statistical, Multidimensional}
+   \terms{Algorithms, Performances, Experiments, Human factors, Verification.}
+   \keywords{Content-based image retrieval system, Classification, Feedback loop, Supervised learning.}
+   \end{comment}
+\end{classification}
+\begin{comment}
+\begin{acknowledgements}
+ 
+   The usual place of acknowledgements, if this pleases you or if the work has been conducted as part of a larger endeavour.
+    
+\end{acknowledgements}
+\end{comment}
+%--------------------------------------------------------------------------------
+
+
+
+
+\maketitle
+
+%--------------------------------------------------------------------------------
+
+
+\newpage
+
+\tableofcontents
+
+%-----------------------------------------------------------
+\chapter{Introduction}
+\subfile{sections/introduction}
+
+
+\chapter{Conceptions}
+\subfile{sections/Conceptions}
+
+\chapter{Proposals}
+\subfile{sections/Proposals}
+
+\chapter{Experiments and Results}
+\label{chap:Experiments}
+
+%\subfile{sections/Experiments-and-Results}
+
+\chapter{Conclusion}
+%\subfile{sections/Conclusion}
+
+%-------------------------------------------------------------------------------
+
+\bibliography{rapport}
+%\listoffigures{}
+
+%\listoftables{}
+
+%\listofalgorithms{}
+
+\appendix
+%\chapter{Quoting Correctly}
+%\subfile{appendix/Quoting-Correctly}
+
+%\chapter{Reminder}
+%\subfile{appendix/Reminder}
+
+%\chapter{Detailed Measures}
+%\subfile{appendix/Detailed-Measures}
+
+%\chapter{Annotated References}
+%\subfile{appendix/Annotated-References}
+
+\chapter{Schedule}
+\subfile{appendix/Schedule}
+
+
+\chapter{Weekly Reports}
+\subfile{appendix/Weekly-Reports}
+
+
+\chapter{Self-assessment}
+\subfile{appendix/Self-assessment}
+
+\end{document}

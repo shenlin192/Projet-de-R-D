@@ -68,4 +68,14 @@ Rectangle.prototype.area = function area() {
 
 console.log(new Rectangle(3, 4).area());
 
+function Rectangle2(x,y){
+	this._buffer=hw._ZN9RectangleC2Eii((new RectangleType()).ref(), 2, 9); 
+}
+
+Rectangle2.prototype.area = function area() {
+    return hw._ZN9Rectangle4areaEv(this._buffer);
+};
+
+console.log(new Rectangle2(3,4).area())
+
 

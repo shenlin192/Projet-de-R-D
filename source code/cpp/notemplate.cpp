@@ -53,6 +53,10 @@ Rectangle* createRectPtr(int a, int b){
   return new Rectangle(a,b);
 }
 
+int add(int a, int b){
+return a+b;
+}
+
 int main(){
 
 	Rectangle c(2,3);	

@@ -29,7 +29,7 @@ ADD_LIBRARY(templateExampleLib SHARED ./cpp/templateExample)
 TARGET_LINK_LIBRARIES(templateExampleLib ${DGTAL_LIBRARIES})
 
 ADD_LIBRARY(notemplateLib SHARED ./cpp/notemplate)
-TARGET_LINK_LIBRARIES(notemplateLib ${DGTAL_LIBRARIES})
+TARGET_LINK_LIBRARIES(notemplateLib)
 
 ADD_LIBRARY(testBoostLib SHARED ./cpp/testBoost)
 TARGET_LINK_LIBRARIES(testBoostLib ${DGTAL_LIBRARIES})

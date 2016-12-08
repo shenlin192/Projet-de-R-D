@@ -1,0 +1,2 @@
+swig -c++ -javascript -node mylib.i
+node-gyp build
