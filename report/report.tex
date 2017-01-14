@@ -1,7 +1,5 @@
 \documentclass[11pt, english, screen, research-development]{report-rd-info}
-   % - 11pt:  12pt can be preferable to read the report on small screens, ask your supervisors
-   % - screen:  to be removed in order to obtain a classical report
-   % - research-development:  to be replaced either by 'research' alone, or 'development' alone, or even 'intelligence', depending on the classification given to you by the committee at the end of the project
+ 
 \usepackage[latin1]{inputenc}
    % - latin9, utf8, etc.
 \usepackage[T1]{fontenc}
@@ -16,6 +14,47 @@
 \usepackage{minted}
 \usepackage{subfiles}
 
+\usepackage{listings}
+\usepackage{color}
+
+
+
+\usepackage{hyperref}
+\usepackage{cleveref}[2012/02/15]% v0.18.4; 
+\crefformat{footnote}{#2\footnotemark[#1]#3}
+
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=Java,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+
+% JavaScript
+\lstdefinelanguage{JavaScript}{
+  morekeywords={typeof, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break},
+  morecomment=[s]{/*}{*/},
+  morecomment=[l]//,
+  morestring=[b]",
+  morestring=[b]'
+}
+
 \begin{document}
 
 \title{Integration of a JavaScript interpreter in DGtal}
@@ -23,28 +62,7 @@
 \authorA{Lin}{SHEN}
 
 \supervisor{Nicolas}{NORMAND}
-  % In case, there are more than two supervisors, use the following trick:
-   %    \cosupervisor{Jean}{Cadre \& {\normalfont Still} Another}
-%\institution{LINA}
-   % - LINA when you're supervised by members of the research teams GRIM or COD (may be some others);
-   % - IRCCyN when youre supervised by members of the research team IVC;
-   % - XXX when supervised by another organism
-   %   (In that case, you have to provide, in the "logos" directories, the files named: XXX.pdf -- if not XXX.jpeg or XXX.png -- for pdflatex *and* XXX.eps for latex);
-   % - otherwise comment it
-%\theme{\'Equipe DUKE}
-   % - optionally provide it when an institution has been declared (DUKE or IVC for the local research teams)
-   % - otherwise comment it
-%\coinstitution{Centre national de la recherche scientifique}{CNRS}{1.7cm}
-   % - if you need to add a partner
-   % - the logo must be provided, e.g., CNRS.pdf here
-   % - the third parameter allows one to control the width of the logo in order to make
-   %   it look of the same size of the one from the university of nantes and possibly the laboratory
-\date{November 25, 2016}
-   % - do not had un 0 in front of the first to ninth day of a mont!
-   % - you can altogether ignore the day.
-
-%-------------------------------------------------------------------------------------------------------------
-
+ 
 
 \begin{abstract}
 %\small % Comment it out should the abstract by slightly too long to fit in the page.
@@ -105,12 +123,11 @@
 \subfile{sections/Proposals}
 
 \chapter{Experiments and Results}
-\label{chap:Experiments}
+\subfile{sections/Experiments-and-Results}
 
-%\subfile{sections/Experiments-and-Results}
 
 \chapter{Conclusion}
-%\subfile{sections/Conclusion}
+\subfile{sections/Conclusion}
 
 %-------------------------------------------------------------------------------
 
