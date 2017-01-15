@@ -14,6 +14,7 @@ Our examinations is consisted of three parts. The common goal of these examinati
 
 ### BasicUsage Library
 The source code to create a library for this examination is in path "./sourceCode/cpp/BasicUsage.cpp". It contains:
+
 1. a global function `add` that adds two Integrate and returns the sum 
 2. a class `Rectangle` that contains two private attributes (long and width) and two member functions that calculate its area and perimeter respectively. 
 3. a global function `createRectObj` that returns a rectangle object
@@ -22,6 +23,7 @@ The source code to create a library for this examination is in path "./sourceCod
 ### BasicUsage test
 The source code to test a library for this examination is in path "./sourceCode/js/BasicUsage.js".
 In this test, we have accomplished to 
+
 1. Use the function `add` in JavaScript
 2. Create a `Rectangle` object directly in JavaScript 
 3. Create a `Rectangle` object in C++ from existing buffer
