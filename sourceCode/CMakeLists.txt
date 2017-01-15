@@ -31,6 +31,9 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/${name}/lib)
 add_library(${name}Lib SHARED ./cpp/${name}/${name})
 target_link_libraries(${name}Lib ${DGTAL_LIBRARIES})
 
+
+
+
 if(FALSE)
 ############## Hello world project ################
 set(name "HelloWorld")

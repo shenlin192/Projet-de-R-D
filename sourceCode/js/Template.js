@@ -22,7 +22,7 @@ var RectanglePtrType = ref.refType(RectangleType);
 var RectanglePtrType2 = ref.refType(RectangleType2);
 
 //introduce foreign functions
-var hw = ffi.Library('../../build/libtemplateExampleLib', {
+var Template = ffi.Library('../../build/Template/lib/libTemplateLib', {
 	/****************************Int type***********************************/
 	//Rectangle created by constructor
 	_ZN9RectangleIiEC1Eii:[RectanglePtrType, [RectanglePtrType,'int', 'int']],
@@ -50,67 +50,63 @@ var hw = ffi.Library('../../build/libtemplateExampleLib', {
 	
 		});
 
-/***********************************************************************/
-/***********************JavaScript part*********************************/
-/***********************************************************************/
-
 
 /****************************Int type***********************************/
 
-//encapsulate foreign functions into JS
+//0 encapsulate foreign functions into JS
 function Rectangle(x, y) {
-    this._buffer = hw._Z13createRectRefii(x, y);
+    this._buffer = Template._Z13createRectRefii(x, y);
 }
 
 Rectangle.prototype.area = function area() {
-    return hw._ZN9RectangleIiE4areaEv(this._buffer);
+    return Template._ZN9RectangleIiE4areaEv(this._buffer);
 }
 
 //1 object constructed by a function returning a pointer
 console.log(new Rectangle(3, 4).area());
 
 //2 object constructed by a function returning an object
-console.log(hw._Z13createRectObjii(1,2));
+console.log(Template._Z13createRectObjii(1,2));
 
-//3 Object constructed by C++ constructor
-var a = new RectangleType();
-hw._ZN9RectangleIiEC1Eii(a.ref(),7,8);
-console.log(hw._ZN9RectangleIiE9perimeterEv(a.ref()));
+//3 Object constructed by C++ constructor from existing buffer
+var r1 = new RectangleType();
+Template._ZN9RectangleIiEC1Eii(r1.ref(),7,8);
+console.log(Template._ZN9RectangleIiE9perimeterEv(r1.ref()));
 
-//4 Object constructed by JavaScript
-var b = new RectangleType();
-b.x=3;
-b.y=4;
-console.log(hw._ZN9RectangleIiE4areaEv(b.ref()))
+//4 Object constructed by JavaScript directly
+var r2 = new RectangleType();
+r2.x=3;
+r2.y=4;
+console.log(Template._ZN9RectangleIiE4areaEv(r2.ref()))
 
 console.log("-----------------------------------------------------")
 
 
 /****************************double type**************************/
 
-//encapsulate foreign functions into JS
+//0 encapsulate foreign functions into JS
 function Rectangle2(x, y) {
-    this._buffer = hw._Z13createRectRefdd(x, y);
+    this._buffer = Template._Z13createRectRefdd(x, y);
 }
 
 Rectangle2.prototype.area = function area() {
-    return hw._ZN9RectangleIdE4areaEv(this._buffer);
+    return Template._ZN9RectangleIdE4areaEv(this._buffer);
 }
 
 //1 object constructed by a function returning a pointer
 console.log(new Rectangle2(3.3, 4.3).area());
 
 //2 object constructed by a function returning an object
-console.log(hw._Z13createRectObjdd(1.2,2.2));
+console.log(Template._Z13createRectObjdd(1.2,2.2));
 
-//3 Object constructed by C++ constructor
-var c = new RectangleType2();
-hw._ZN9RectangleIdEC1Edd(c.ref(),7,8);
-console.log(hw._ZN9RectangleIdE9perimeterEv(c.ref()));
+//3 Object constructed by C++ constructor from existing buffer
+var r3 = new RectangleType2();
+Template._ZN9RectangleIdEC1Edd(r3.ref(),7,8);
+console.log(Template._ZN9RectangleIdE9perimeterEv(r3.ref()));
 
-//4 Object constructed by JavaScript
-var d = new RectangleType2();
-d.x=3.5;
-d.y=4.5;
-console.log(hw._ZN9RectangleIdE4areaEv(d.ref()))
+//4 Object constructed by JavaScript directly
+var r4 = new RectangleType2();
+r4.x=3.5;
+r4.y=4.5;
+console.log(Template._ZN9RectangleIdE4areaEv(r4.ref()))
 
