@@ -1,7 +1,7 @@
 var ref = require('ref');
 var ffi = require('ffi');
 
-var hw = ffi.Library('../build/libtestBoostLib',{
+var hw = ffi.Library('../../build/libtestBoostLib',{
 	 _Z9testBoostv:['Pointer',[]],
 	 })
 	 

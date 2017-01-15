@@ -22,7 +22,7 @@ var RectanglePtrType = ref.refType(RectangleType);
 var RectanglePtrType2 = ref.refType(RectangleType2);
 
 //introduce foreign functions
-var hw = ffi.Library('./libtemplateExampleLib', {
+var hw = ffi.Library('../../build/libtemplateExampleLib', {
 	/****************************Int type***********************************/
 	//Rectangle created by constructor
 	_ZN9RectangleIiEC1Eii:[RectanglePtrType, [RectanglePtrType,'int', 'int']],

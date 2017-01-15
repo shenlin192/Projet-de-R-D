@@ -2,7 +2,7 @@
 
 var ffi = require('ffi');
 
-var hw = ffi.Library('/home/shen/Desktop/PR&D/GitHub/build/libhelloworldLib', {
+var hw = ffi.Library('../../build/libhelloworldLib', {
 	main: ['int', ['int']],
 		});
 

@@ -11,7 +11,7 @@ var RectangleType = Struct({
 
 var RectanglePtrType = ref.refType(RectangleType);
 
-var hw = ffi.Library('../build/libnotemplateLib', {
+var hw = ffi.Library('../../build/libnotemplateLib', {
    // _ZN9RectangleC1ERS_: [RectangleType, [RectanglePtrType]],
    // _ZN9RectangleC2ERS_: [RectangleType, [RectanglePtrType]],
     
