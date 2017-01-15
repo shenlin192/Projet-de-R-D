@@ -36,7 +36,7 @@ In order to create a C++ class object with Node FFI, we need to firstly define a
 In order to use a C++ class's functions, such as its constructors or member functions, in Node-ffi, the reference of an object created by that class should be passed into these functions as their default parametere. 
 	
 
-## template
+## Template
 ### Template Library
 The source code to create a library for this experiment is in path "./sourceCode/cpp/Template.cpp". It's structure is almost the same as the library in BasicUsage experiment expect that it's written in the form of C++ template. We have not rewrite the function `add` into template form for simplicity of code.
 
@@ -56,6 +56,11 @@ Similar to what we have done for BasicUsage's test, this experiment has:
 The main difference is, this time in the JavaScript file, we have to specific which type (int or double) of the template classes or functions is needed. It's worth noting that, in order to distinguish functions or classes that have the same name in C++ source file, the compiler does  something called "name mangling", so that after compilation, each function or class will only have a unique name. In our experiment for example, `_Z13createRectObjii` reprensents the `Rectangle<int> createRectObj(int a, int b)` function in source code; `_Z13createRectObjdd` represents the `Rectangle<double> createRectObj(double a, double b)` .
 
 ## Boost
-In the file of "testBoost.js", we have tested the library of Boost. The usage of Boost with FFI is the same as the basic usage (like calling a normal global function, calling a global variable...). All we need to do is to "include" the Boost library in the C++ file, and then generate a shared library, and then we can use functions defined in Boost from JavaScript. 
+### Boost library
+Source code to create library for Boost experiment is in path "./sourceCode/cpp/Boost.cpp".
+Since there are numbers of functions predifined in Boost, we chose only one of them to test if Boost can cooperate with node-ffi. In this experiment, the `timer` of Boost is chosen as a sample.  
+
+### Boost test
+The source code for boost timer test is in path "./sourceCode/js/Boost.js". The usage of Boost with FFI is the same as the BasicUsage (like calling a normal global function, calling a global variable...). All we need to do is to "include" the Boost library in the C++ file, and then generate a shared library. After that functions defined in Boost can be used easily from JavaScript. 
 
 
