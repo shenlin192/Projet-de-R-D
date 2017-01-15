@@ -58,9 +58,13 @@ The main difference is, this time in the JavaScript file, we have to specific wh
 ## Boost
 ### Boost library
 Source code to create library for Boost experiment is in path "./sourceCode/cpp/Boost.cpp".
-Since there are numbers of functions predifined in Boost, we chose only one of them to test if Boost can cooperate with node-ffi. In this experiment, the `timer` of Boost is chosen as a sample.  
+Since there are numbers of functions predifined in Boost, we chose only one of them to test if Boost can cooperate with node-ffi. In this experiment, the `timer` and `progress` of Boost are chosen as for testing.  
+
+It's worth noting that we do not expose Boost directly to node-ffi. Instead, we created a wrapper function `testBoost` containing the necessary C++ code of Boost for lately use. 
 
 ### Boost test
 The source code for boost timer test is in path "./sourceCode/js/Boost.js". The usage of Boost with FFI is the same as the BasicUsage (like calling a normal global function, calling a global variable...). All we need to do is to "include" the Boost library in the C++ file, and then generate a shared library. After that functions defined in Boost can be used easily from JavaScript. 
+
+
 
 
