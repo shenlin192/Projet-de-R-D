@@ -1,4 +1,5 @@
-PROJECT(Helloworld)
+############## General configuration ############
+PROJECT(PRED)
 #Required in DGtal
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 
@@ -12,19 +13,65 @@ INCLUDE_DIRECTORIES(${DGTAL_INCLUDE_DIRS})
 LINK_DIRECTORIES(${DGTAL_LIBRARY_DIRS})
 
 
-#The command "set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/GridCurve")" changes the default output path, which is "build"
+############## BasicUsage examination ################
+set(name "BasicUsage")
+## BasicUsage library
+file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/${name}/lib")
+#replace the default output of shared library (build) with a customized path
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/${name}/lib)
+add_library(${name}Lib SHARED ./cpp/${name}/${name})
+target_link_libraries(${name}Lib ${DGTAL_LIBRARIES})
+
+############## Template examination ################
+set(name "Template")
+## BasicUsage library
+file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/${name}/lib")
+#replace the default output of shared library (build) with a customized path
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/${name}/lib)
+add_library(${name}Lib SHARED ./cpp/${name}/${name})
+target_link_libraries(${name}Lib ${DGTAL_LIBRARIES})
+
+if(FALSE)
+############## Hello world project ################
+set(name "HelloWorld")
+
+## GridCurve executable
+#create a container for GridCurve project
+file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/${name}/bin")
+#replace the default output of executable (build) with a customized path
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${name}/bin")
+add_executable(${name} ./cpp/${name}/${name})
+target_link_libraries(${name} ${DGTAL_LIBRARIES})
+
+## Hello world library
+file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/${name}/lib")
+#replace the default output of shared library (build) with a customized path
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/${name}/lib)
+add_library(${name}Lib SHARED ./cpp/HelloWorld/HelloWorld)
+target_link_libraries(${name}Lib ${DGTAL_LIBRARIES})
+
+
+
+############## GridCurve project ################
+
+## GridCurve executable
+#create a container for GridCurve project
 file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/GridCurve/bin")
+#replace the default output of executable (build) with a customized path
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/GridCurve/bin")
 add_executable(GridCurve ./cpp/GridCurve/GridCurve)
 target_link_libraries(GridCurve ${DGTAL_LIBRARIES})
-
-# copy the smallSquare from source to build
+# copy the resources from source code to the project
 configure_file(./cpp/GridCurve/smallSquare.dat ${CMAKE_BINARY_DIR}/GridCurve/bin COPYONLY)
 
-#add_library(GridCurveLib SHARED ./cpp/helloworld)
-#target_link_libraries(GridCurveLib ${DGTAL_LIBRARIES})
-
-
+## GridCurve library
+file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/GridCurve/lib")
+#replace the default output of shared library (build) with a customized path
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/GridCurve/lib)
+add_library(GridCurveLib SHARED ./cpp/helloworld)
+target_link_libraries(GridCurveLib ${DGTAL_LIBRARIES})
+configure_file(./cpp/GridCurve/smallSquare.dat ${CMAKE_BINARY_DIR}/GridCurve/lib COPYONLY)
+endif()
 
 
 

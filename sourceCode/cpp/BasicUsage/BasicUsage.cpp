@@ -3,6 +3,11 @@
 
 using namespace std;
 
+//A global function
+int add(int a, int b){
+	return a+b;
+}
+
 //definition of a class
 class Rectangle {
   private:
@@ -10,8 +15,6 @@ class Rectangle {
 
   public:
     Rectangle (int,int);
-   // Rectangle(Rectangle& r);
-   // Rectangle(){};
     int area();
     int perimeter();
     void setWidth(int);
@@ -23,13 +26,6 @@ Rectangle::Rectangle (int a, int b) {
 	  width = a;
 	  height = b;
 }
-
-/*
-Rectangle::Rectangle(Rectangle& r) {
-    width = r.width;
-    height = r.height;
-}
-*/
 
 int Rectangle::area() {
     return width * height;
@@ -43,29 +39,18 @@ void Rectangle::setWidth(int a){
 	width = a;
 }
 
-//difinition of global functions
+
+//Function that returns an object
 Rectangle createRectObj(int a, int b){
   Rectangle r1(a,b);
   return r1;
 }
 
+//Function that returns an object pointer
 Rectangle* createRectPtr(int a, int b){
   return new Rectangle(a,b);
 }
 
-int add(int a, int b){
-return a+b;
-}
 
-int main(){
-
-	Rectangle c(2,3);	
-	cout<<c.area()<<endl;		
-	Rectangle d(c);
-	d.setWidth(10);
-	cout<<d.perimeter()<<endl;
-	cout<<c.area()<<endl;	
-	
-}
 
 

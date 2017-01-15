@@ -29,7 +29,7 @@ T Rectangle<T>::perimeter(){
 	return (width+height)*2;
 }
 
-/*************************usage of the Rectangle class****************************/
+/**** Declare the types of the Rectangle template class********/
 int calRect(int a, int b){
  	Rectangle<int> r1(a,b);
   	return r1.area() + r1.perimeter();

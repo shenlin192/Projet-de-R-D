@@ -11,7 +11,7 @@ var RectangleType = Struct({
 
 var RectanglePtrType = ref.refType(RectangleType);
 
-var hw = ffi.Library('../../build/libnotemplateLib', {
+var hw = ffi.Library('../build/libnotemplateLib', {
    // _ZN9RectangleC1ERS_: [RectangleType, [RectanglePtrType]],
    // _ZN9RectangleC2ERS_: [RectangleType, [RectanglePtrType]],
     
@@ -36,12 +36,16 @@ c.x = 30;
 c.y = 4;
 console.log('JavaScript built rectangle: ', hw._ZN9Rectangle9perimeterEv(c.ref()));
 
+
+
 console.log('-----------------------------------------------');
 console.log('Object constructed by C++ from existing buffer');
 d = new RectangleType();
 hw._ZN9RectangleC2Eii(d.ref(), 2, 9);
 console.log(d);
 console.log('C++ built rectangle area: ', hw._ZN9Rectangle4areaEv(d.ref()));
+
+
 
 console.log('-------------------------------------------------');
 console.log('Object created by a function returning a pointer');
@@ -50,10 +54,13 @@ console.log(a);
 console.log('area of a: ', hw._ZN9Rectangle4areaEv(a));
 
 
+
 console.log('-------------------------------------------------');
 console.log('Object created by a function returning an object');
 var b=hw._Z13createRectObjii(3, 4);
 console.log(hw._ZN9Rectangle9perimeterEv(b.ref()))
+
+
 
 
 console.log('-------------------------------------------------');
