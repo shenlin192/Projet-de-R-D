@@ -43,6 +43,27 @@ add_library(${name}Lib SHARED ./cpp/${name}/${name})
 target_link_libraries(${name}Lib ${DGTAL_LIBRARIES})
 
 
+############## 2DPoints examination ################
+set(name "2DPoints")
+
+## BasicUsage library
+file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/${name}/lib")
+#replace the default output of shared library (build) with a customized path
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/${name}/lib)
+add_library(${name}Lib SHARED ./cpp/${name}/${name})
+target_link_libraries(${name}Lib ${DGTAL_LIBRARIES})
+
+
+
+
+
+
+
+
+
+
+
+
 if(FALSE)
 ############## Hello world project ################
 set(name "HelloWorld")
