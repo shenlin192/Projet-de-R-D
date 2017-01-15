@@ -1,11 +1,25 @@
 # Intégration d’un interprète JavaScript dans DGtal
+## Goal
+This project aims to provide a JavaScript command interpreter for [DGtal](http://dgtal.org/), a digital geometry written in C++.   
+## prerequest
+1. A Linux system
+2. Install [nodejs](https://nodejs.org/en/)
+3. Install [ffi](https://github.com/node-ffi/node-ffi)  
+4. Install [DGtal](http://dgtal.org/doc/stable/moduleBuildDGtal.html) 
+5. Install [CMake](https://cmake.org/install/)
+
 ## How to use?
-1. new a directory in your project path and name it "build" "~your projectPath$ mkdir build"
-2. go to the "build" directory and run the cmake command "~your projectPath/build$ cmake ../sourceCode"
-3. run the make command in the "build" directory "~your projectPath/build$ make"
+1. Clone this repo
+2. new a directory in your project path and name it "build" `~your projectPath$ mkdir build`
+3. go to the "build" directory and run the cmake command `~your projectPath/build$ cmake ../sourceCode`
+4. run the make command in newly created "build" directory `~your projectPath/build$ make`
 
-##You can click [here](https://www.sharelatex.com/project/58340f92c0f0db5876a1a377) to read the report of this project
+After these 4 steps, you have already generated all necessary files for this project.
+Now you can go to the `sourceCode` directory and chose any experiment for testing:
 
+5. `~your projectPath/sourceCode/experimentName$ node experimentName.js` 
+
+All the file path configuration are in a `CMakeLists.txt` under the `sourceCode` directory. If you want to change the structure of this project, just modify this file and rerun the `cmake` and `make` command.
 
 # Experiments
 Our Experiments is consisted of three parts. The common goal of these experiments are to use C++ library from within JavaScript by using node-ffi. For each example, I will firstly explain the C++ library that is going to be used, and then explain how to use that library in JavaScript.
@@ -65,6 +79,6 @@ It's worth noting that we do not expose Boost directly to node-ffi. Instead, we 
 ### Boost test
 The source code for boost timer test is in path "./sourceCode/js/Boost.js". The usage of Boost with FFI is the same as the BasicUsage (like calling a normal global function, calling a global variable...). All we need to do is to "include" the Boost library in the C++ file, and then generate a shared library. After that functions defined in Boost can be used easily from JavaScript. 
 
-
+##You can click [here](https://www.sharelatex.com/project/58340f92c0f0db5876a1a377) to read the report of this project
 
 

@@ -19,7 +19,7 @@ set(name "BasicUsage")
 file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/${name}/lib")
 #replace the default output of shared library (build) with a customized path
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/${name}/lib)
-add_library(${name}Lib SHARED ./cpp/${name}/${name})
+add_library(${name}Lib SHARED ./${name}/${name})
 target_link_libraries(${name}Lib ${DGTAL_LIBRARIES})
 
 
@@ -29,7 +29,7 @@ set(name "Template")
 file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/${name}/lib")
 #replace the default output of shared library (build) with a customized path
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/${name}/lib)
-add_library(${name}Lib SHARED ./cpp/${name}/${name})
+add_library(${name}Lib SHARED ./${name}/${name})
 target_link_libraries(${name}Lib ${DGTAL_LIBRARIES})
 
 
@@ -39,7 +39,7 @@ set(name "Boost")
 file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/${name}/lib")
 #replace the default output of shared library (build) with a customized path
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/${name}/lib)
-add_library(${name}Lib SHARED ./cpp/${name}/${name})
+add_library(${name}Lib SHARED ./${name}/${name})
 target_link_libraries(${name}Lib ${DGTAL_LIBRARIES})
 
 
@@ -50,7 +50,7 @@ set(name "2DPoints")
 file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/${name}/lib")
 #replace the default output of shared library (build) with a customized path
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/${name}/lib)
-add_library(${name}Lib SHARED ./cpp/${name}/${name})
+add_library(${name}Lib SHARED ./${name}/${name})
 target_link_libraries(${name}Lib ${DGTAL_LIBRARIES})
 
 
@@ -73,14 +73,14 @@ set(name "HelloWorld")
 file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/${name}/bin")
 #replace the default output of executable (build) with a customized path
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${name}/bin")
-add_executable(${name} ./cpp/${name}/${name})
+add_executable(${name} ./${name}/${name})
 target_link_libraries(${name} ${DGTAL_LIBRARIES})
 
 ## Hello world library
 file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/${name}/lib")
 #replace the default output of shared library (build) with a customized path
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/${name}/lib)
-add_library(${name}Lib SHARED ./cpp/HelloWorld/HelloWorld)
+add_library(${name}Lib SHARED ./HelloWorld/HelloWorld)
 target_link_libraries(${name}Lib ${DGTAL_LIBRARIES})
 
 
@@ -92,7 +92,7 @@ target_link_libraries(${name}Lib ${DGTAL_LIBRARIES})
 file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/GridCurve/bin")
 #replace the default output of executable (build) with a customized path
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/GridCurve/bin")
-add_executable(GridCurve ./cpp/GridCurve/GridCurve)
+add_executable(GridCurve ./GridCurve/GridCurve)
 target_link_libraries(GridCurve ${DGTAL_LIBRARIES})
 # copy the resources from source code to the project
 configure_file(./cpp/GridCurve/smallSquare.dat ${CMAKE_BINARY_DIR}/GridCurve/bin COPYONLY)
@@ -101,7 +101,7 @@ configure_file(./cpp/GridCurve/smallSquare.dat ${CMAKE_BINARY_DIR}/GridCurve/bin
 file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/GridCurve/lib")
 #replace the default output of shared library (build) with a customized path
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/GridCurve/lib)
-add_library(GridCurveLib SHARED ./cpp/helloworld)
+add_library(GridCurveLib SHARED ./helloworld)
 target_link_libraries(GridCurveLib ${DGTAL_LIBRARIES})
 configure_file(./cpp/GridCurve/smallSquare.dat ${CMAKE_BINARY_DIR}/GridCurve/lib COPYONLY)
 endif()

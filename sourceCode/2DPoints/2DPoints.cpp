@@ -8,11 +8,9 @@ Point* create2DPoint(int a, int b){
 	return new Point(a,b);
 }
 
-
-
-void draw2DPoint(Point p){
+void draw2DPoint(Point p1, Point p2){
 	Board2D board;
-	board << p;
+	board << p1<<p2;
 	board.saveSVG("draw2DPoint.svg");
 }
 
