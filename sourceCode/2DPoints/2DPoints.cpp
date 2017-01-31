@@ -13,4 +13,3 @@ void draw2DPoint(Point p1, Point p2){
 	board << p1<<p2;
 	board.saveSVG("draw2DPoint.svg");
 }
-

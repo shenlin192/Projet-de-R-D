@@ -1,6 +1,6 @@
 # Intégration d’un interprète JavaScript dans DGtal
 ## Goal
-This project aims to provide a JavaScript command interpreter for [DGtal](http://dgtal.org/), a digital geometry written in C++.   
+This project aims to provide a JavaScript command interpreter for [DGtal](http://dgtal.org/)(a C++ geometry library)   
 ## prerequest
 1. A Linux system
 2. Install [nodejs](https://nodejs.org/en/)
@@ -40,7 +40,7 @@ In this test, we have accomplished to
 
 1. Use the function `add` in JavaScript
 2. Create a `Rectangle` object directly in JavaScript 
-3. Create a `Rectangle` object in C++ from existing buffer
+3. Create a `Rectangle` object in C++ from existing buffer (directly using C++ constructor)
 4. Create a `Rectangle` object by using the `createRectObj` function 
 5. Create a `Rectangle` object pointer by using the `createRectPtr` function 
 6. Encapsulate the creation of C++ object into JavaScript function prototype, so that we can use that object with JavaScript syntax.
@@ -79,6 +79,16 @@ It's worth noting that we do not expose Boost directly to node-ffi. Instead, we 
 ### Boost test
 The source code for boost timer test is in path "./sourceCode/js/Boost.js". The usage of Boost with FFI is the same as the BasicUsage (like calling a normal global function, calling a global variable...). All we need to do is to "include" the Boost library in the C++ file, and then generate a shared library. After that functions defined in Boost can be used easily from JavaScript. 
 
+## 2DPoint
+### 2DPoint library
+Source code to create library for Boost experiment is in path "./sourceCode/cpp/2DPoint.cpp".
+
+### 2DPoint test
+
 ##You can click [here](https://www.sharelatex.com/project/58340f92c0f0db5876a1a377) to read the report of this project
+
+
+##C1Edd version double constructor
+##C1Eii verstion int constructor
 
 

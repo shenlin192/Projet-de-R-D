@@ -25,7 +25,7 @@ target_link_libraries(${name}Lib ${DGTAL_LIBRARIES})
 
 ############## Template examination ################
 set(name "Template")
-## BasicUsage library
+## Template library
 file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/${name}/lib")
 #replace the default output of shared library (build) with a customized path
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/${name}/lib)
@@ -35,7 +35,7 @@ target_link_libraries(${name}Lib ${DGTAL_LIBRARIES})
 
 ############## Boost examination ################
 set(name "Boost")
-## BasicUsage library
+## Boost library
 file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/${name}/lib")
 #replace the default output of shared library (build) with a customized path
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/${name}/lib)
@@ -46,7 +46,7 @@ target_link_libraries(${name}Lib ${DGTAL_LIBRARIES})
 ############## 2DPoints examination ################
 set(name "2DPoints")
 
-## BasicUsage library
+## 2DPoints library
 file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/${name}/lib")
 #replace the default output of shared library (build) with a customized path
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/${name}/lib)
