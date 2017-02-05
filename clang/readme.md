@@ -32,6 +32,28 @@ $ clang-3.5 -Xclang -ast-dump -fsyntax-only <file_name>
 - `UnaryOperator`: takes only one operand
 - `CompoundAssignOperator`: eg. a += 1;
 
+## Install LibTooling and clang
+1. install LLVM
+`cd where-you-want-llvm-to-live`
+`svn co http://llvm.org/svn/llvm-project/llvm/trunk llvm`
+
+2. install clang
+`cd where-you-want-llvm-to-live`
+`cd llvm/tools`
+`svn co http://llvm.org/svn/llvm-project/cfe/trunk clang`
+
+3. install Compile-RT
+`cd where-you-want-llvm-to-live`
+`cd llvm/projects`
+`svn co http://llvm.org/svn/llvm-project/compiler-rt/trunk compiler-rt`
+
+4. install test suite source code[optional]
+`cd where-you-want-llvm-to-live`
+`cd llvm/projects`
+`svn co http://llvm.org/svn/llvm-project/test-suite/trunk test-suite`
+
+5. 
+
 
 ## C++ knowledge
 ### lvalue To rvalue:
