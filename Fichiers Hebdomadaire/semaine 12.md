@@ -5,9 +5,6 @@ Moreover, many simple but concrete examples are given. There are so many things 
 in the chapter of link editor and I've just finished the part of "static link".
 
 
-For throughly understand  
-
-
 # Tasks preview:
 
 1. Same as the previous weeks, keep reading books and documents on C++ compilation.
