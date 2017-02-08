@@ -134,7 +134,7 @@ Code for this test is in path "./sourceCode/cpp/2DPoint.js".
 `$ cd build`
 `$ cmake -G Unix Makefiles <path to llvm sources>`
 
-5. Make, This will take a very long time
+5 Make, This will take a very long time
 
 `$ cd where you want to build llvm`
 `$ make`
