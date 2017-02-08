@@ -14,15 +14,15 @@ This project aims to provide a JavaScript command interpreter for [DGtal](http:/
 3. go to the "build" directory and run the cmake command `~your projectPath/build$ cmake ../sourceCode`
 4. run the make command in newly created "build" directory `~your projectPath/build$ make`
 
-	After these 4 steps, you have already generated all necessary files for this project.
-	Now you can go to the `sourceCode` directory and chose any experiment for testing:
+    After these 4 steps, you have already generated all necessary files for this project.
+    Now you can go to the `sourceCode` directory and chose any experiment for testing:
 
 5. `~your projectPath/sourceCode/experimentName$ node experimentName.js`
 
 All the file path configuration are in a `CMakeLists.txt` under the `sourceCode` directory. If you want to change the structure of this project, just modify this file and rerun the `cmake` and `make` command.
 
-# Experiments
-Our Experiments is consisted of three parts. The common goal of these experiments are to use C++ library from within JavaScript by using node-ffi. For each example, I will firstly explain the C++ library that is going to be used, and then explain how to use that library in JavaScript.
+# FFI Experiments
+Our Experiments consists of three parts. The common goal of these experiments is to use C++ library from within JavaScript by using node-ffi. For each example, I will firstly explain the C++ library that is going to be used, and then explain how to use that library in JavaScript.
 
 ## BasicUsage
 
@@ -45,16 +45,16 @@ In this test, we have accomplished to
 5. Create a `Rectangle` object pointer by using the `createRectPtr` function
 6. Encapsulate the creation of C++ object into JavaScript function prototype, so that we can use that object with JavaScript syntax.
 
-In order to create a C++ class object with Node FFI, we need to firstly define a structure that has the same attributes in JavaScript code as the class in C++ code. The definition of a structure in JavaScript can be done by requiring the "ref-struct" model of Node. Moreover, if we to want get the reference of any variable defined in JavaScript, we will need the "ref" model of Node.
+In order to create a C++ class object with Node FFI, we need to firstly define a structure that has the same attributes in JavaScript code as the class in C++ code. The definition of a structure in JavaScript can be done by requiring the "ref-struct" model of Node. Moreover, if we to want to get the reference of any variable defined in JavaScript, we will need the "ref" model of Node.
 
-In order to use a C++ class's functions, such as its constructors or member functions, in Node-ffi, the reference of an object created by that class should be passed into these functions as their default parametere.
+In order to use a C++ class's functions, such as its constructors or member functions, in Node-ffi, the reference of an object created by that class should be passed into these functions as their default parameters.
 
 
 ## Template
 ### Template Library
-The source code to create a library for this experiment is in path "./sourceCode/cpp/Template.cpp". It's structure is almost the same as the library in BasicUsage experiment expect that it's written in the form of C++ template. We have not rewrite the function `add` into template form for simplicity of code.
+The source code to create a library for this experiment is in path "./sourceCode/cpp/Template.cpp". Its structure is almost the same as the library in BasicUsage experiment expect that it's written in the form of C++ template. We have not rewrite the function `add` into template form for simplicity of code.
 
-It's a must to implement all the types that we are going to use lately in this library, which means the template classes or functions can not be use directly through node-ffi. Because without specify types, template functions or template classes cannot be generated into a library's symbol table and thus cannot be found by node-ffi. As for this experiment, type "int" and type "double" are realized.
+It's a must to implement all the types that we are going to use lately in this library, which means the template classes or functions can not be used directly through node-ffi. Because without specifying types, template functions or template classes cannot be generated into a library's symbol table and thus cannot be found by node-ffi. As for this experiment, type "int" and type "double" are realized.
 
 
 ### Template test  
@@ -68,14 +68,14 @@ Similar to what we have done for BasicUsage's test, this experiment has:
 4. Create a `Rectangle` object pointer by using the `createRectPtr` function
 5. Encapsulate the creation of C++ object into JavaScript function prototype, so that we can use that object with JavaScript syntax.
 
-The main difference is, this time in the JavaScript file, we have to specific which type (int or double) of the template classes or functions is needed. It's worth noting that, in order to distinguish functions or classes that have the same name in C++ source file, the compiler does  something called "name mangling", so that after compilation, each function or class will only have a unique name. In our experiment for example, `_Z13createRectObjii` reprensents the `Rectangle<int> createRectObj(int a, int b)` function in source code; `_Z13createRectObjdd` represents the `Rectangle<double> createRectObj(double a, double b)` .
+The main difference is, this time in the JavaScript file, we have to specific which type (int or double) of the template classes or functions is needed. It's worth noting that, in order to distinguish functions or classes that have the same name in C++ source file, the compiler does something called "name mangling", so that after compilation, each function or class will only have a unique name. In our experiment for example, `_Z13createRectObjii` represents the `Rectangle<int> createRectObj(int a, int b)` function in source code; `_Z13createRectObjdd` represents the `Rectangle<double> createRectObj(double a, double b)` .
 
 ## Boost
 ### Boost library
 Source code to create library for Boost experiment is in path "./sourceCode/cpp/Boost.cpp".
-Since there are numbers of functions predifined in Boost, we chose only one of them to test if Boost can cooperate with node-ffi. In this experiment, the `timer` and `progress` of Boost are chosen as for testing.  
+Since there are numbers of functions predefined in Boost, we chose only one of them to test if Boost can cooperate with node-ffi. In this experiment, the `timer` and `progress` of Boost are chosen as for testing.  
 
-It's worth noting that we do not expose Boost directly to node-ffi. Instead, we created a wrapper function `testBoost` containing the necessary C++ code of Boost for lately use.
+It's worth noting that we do not expose Boost directly to node-ffi. Instead, we created a wrapper function `testBoost` containing the necessary C++ code of Boost for lately using.
 
 ### Boost test
 The source code for boost timer test is in path "./sourceCode/js/Boost.js". The usage of Boost with FFI is the same as the BasicUsage (like calling a normal global function, calling a global variable...). All we need to do is to "include" the Boost library in the C++ file, and then generate a shared library. After that functions defined in Boost can be used easily from JavaScript.
@@ -84,31 +84,42 @@ The source code for boost timer test is in path "./sourceCode/js/Boost.js". The 
 ### 2DPoint library
 Source code to create library for Boost experiment is in path "./sourceCode/cpp/2DPoint.cpp".
 
-In the source code, there are two functions, both of which are wappers that used as the media to invoke DGtal functions.
+In the source code, there are two functions, both of which are wrappers that used as the media to invoke DGtal functions.
 
 
-`Point* create2DPoint(int a, int b){
-	return new Point(a,b);
-}`
+```
+Point* create2DPoint(int a, int b){
+    return new Point(a,b);
+}
+```
 
-Where `Point()` is a build-in constructor of DGtal.
+Where `Point()` is a built-in constructor of DGtal.
 
+```
+void draw2DPoint(Point p1, Point p2){
+    Board2D board;
+    board << p1<<p2;
+    board.saveSVG("draw2DPoint.svg");
+}
+```
 
-`void draw2DPoint(Point p1, Point p2){
-	Board2D board;
-	board << p1<<p2;
-	board.saveSVG("draw2DPoint.svg");
-}`
-
-Where `Board2D` is a build-in class of DGtal.
+Where `Board2D` is a built-in class of DGtal.
 
 ### 2DPoint test
 Code for this test is in path "./sourceCode/cpp/2DPoint.js".
+In this test, I've created a point at (3,4) and the other at (1,2) by using the
+`create2DPoint` function.
+After that, I draw these two points with the help of `draw2DPoint`.
+Final result is an image as shown below
+![draw2DPoint](/sourceCode/2DPoints/draw2DPoint.svg "Draw 2 points")
 
+
+
+# SWIG Experiments
 
 
 # Clang and LLVM
-## Prerequest
+## Prerequisite
 
 1. CMake 2.8.6 or later
 2. 30G disk space
@@ -118,44 +129,44 @@ Code for this test is in path "./sourceCode/cpp/2DPoint.js".
 
 1. Download llvm:
 
-		`$ cd where-you-want-llvm-to-live`
+        `$ cd where-you-want-llvm-to-live`
 
-		`$ svn co http://llvm.org/svn/llvm-project/llvm/trunk llvm`
+        `$ svn co http://llvm.org/svn/llvm-project/llvm/trunk llvm`
 
 2. Download Clang:
 
-		`$ cd where-you-want-llvm-to-live`
+        `$ cd where-you-want-llvm-to-live`
 
-		`$ cd llvm/tools`
+        `$ cd llvm/tools`
 
-		`$ svn co http://llvm.org/svn/llvm-project/cfe/trunk clang`
+        `$ svn co http://llvm.org/svn/llvm-project/cfe/trunk clang`
 
-3. Download Comlile-RT:
+3. Download Compile-RT:
 
-		`$ cd where-you-want-llvm-to-live`
+        `$ cd where-you-want-llvm-to-live`
 
-		`$ cd llvm/projects`
+        `$ cd llvm/projects`
 
-		`$ svn co http://llvm.org/svn/llvm-project/compiler-rt/trunk compiler-rt`
+        `$ svn co http://llvm.org/svn/llvm-project/compiler-rt/trunk compiler-rt`
 
 4. Install
 
-		`$ cd where you want to build llvm`
+        `$ cd where you want to build llvm`
 
-		`$ mkdir build`
+        `$ mkdir build`
 
-		`$ cd build`
+        `$ cd build`
 
-		`$ cmake -G Unix Makefiles <path to llvm sources>`
+        `$ cmake -G Unix Makefiles <path to llvm sources>`
 
 5. Make. This will take a very long time
 
-		`$ cd where you want to build llvm`
+        `$ cd where you want to build llvm`
 
-		`$ make`
+        `$ make`
 
 ## How to increase your swap space?
-As mentioned in prerequest, at least 6GB swap space is needed to install LLVM.
+As mentioned in the prerequisite, at least 6GB swap space is needed to install LLVM.
 However, by default, the swap space is the size of memory, which may be less than 6GB.
 Thus, we need to add swap space manually. The following code shows how to add 4GB to swap space.
 
@@ -164,6 +175,10 @@ Thus, we need to add swap space manually. The following code shows how to add 4G
 3. `$ swapon /swapfile`
 
 ## Display the AST
+
+The following command can be used to display the AST of a chosen c/c++ file
+`$ clang -Xclang -ast-dump -fsyntax-only <file_name>`
+
 
 C1Edd version double constructor
 C1Eii verstion int constructor
