@@ -114,17 +114,25 @@ Code for this test is in path "./sourceCode/cpp/2DPoint.js".
 ## Install
 
 1. Download llvm:
+
 `$ cd where-you-want-llvm-to-live`
+
 `$ svn co http://llvm.org/svn/llvm-project/llvm/trunk llvm`
 
 2. Download Clang:
+
 `$ cd where-you-want-llvm-to-live`
+
 `$ cd llvm/tools`
+
 `$ svn co http://llvm.org/svn/llvm-project/cfe/trunk clang`
 
 3. Download Comlile-RT:
+
 `$ cd where-you-want-llvm-to-live`
+
 `$ cd llvm/projects`
+
 `$ svn co http://llvm.org/svn/llvm-project/compiler-rt/trunk compiler-rt`
 
 4. Install
