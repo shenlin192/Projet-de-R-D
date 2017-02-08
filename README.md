@@ -14,8 +14,8 @@ This project aims to provide a JavaScript command interpreter for [DGtal](http:/
 3. go to the "build" directory and run the cmake command `~your projectPath/build$ cmake ../sourceCode`
 4. run the make command in newly created "build" directory `~your projectPath/build$ make`
 
-After these 4 steps, you have already generated all necessary files for this project.
-Now you can go to the `sourceCode` directory and chose any experiment for testing:
+	After these 4 steps, you have already generated all necessary files for this project.
+	Now you can go to the `sourceCode` directory and chose any experiment for testing:
 
 5. `~your projectPath/sourceCode/experimentName$ node experimentName.js` 
 
@@ -129,12 +129,12 @@ Code for this test is in path "./sourceCode/cpp/2DPoint.js".
 
 4. Install
 
-`$ cd where you want to build llvm`
-`$ mkdir build`
-`$ cd build`
-`$ cmake -G Unix Makefiles <path to llvm sources>`
+	`$ cd where you want to build llvm`
+	`$ mkdir build`
+	`$ cd build`
+	`$ cmake -G Unix Makefiles <path to llvm sources>`
 
-5 Make, This will take a very long time
+5. Make, This will take a very long time
 
 `$ cd where you want to build llvm`
 `$ make`
