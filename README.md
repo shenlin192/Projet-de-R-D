@@ -1,6 +1,17 @@
 # Intégration d’un interprète JavaScript dans DGtal
 ## Goal
-This project aims to provide a JavaScript command interpreter for [DGtal](http://dgtal.org/)(a C++ geometry library)   
+This project aims to provide a JavaScript command interpreter for [DGtal](http://dgtal.org/)(a C++ geometry library). This documentation explains the experimental part of the project.
+
+You can click [here](https://www.sharelatex.com/project/58340f92c0f0db5876a1a377) to read a full report.
+
+# Contents:
+
+* [FFI Experiments](#1)
+
+* [SWIG Experiments](#2)
+
+* [Clang and LLVM Experiments](#3)
+
 ## prerequest
 1. A Linux system
 2. Install [nodejs](https://nodejs.org/en/)
@@ -21,8 +32,10 @@ This project aims to provide a JavaScript command interpreter for [DGtal](http:/
 
 All the file path configuration are in a `CMakeLists.txt` under the `sourceCode` directory. If you want to change the structure of this project, just modify this file and rerun the `cmake` and `make` command.
 
-# FFI Experiments
-Our Experiments consists of three parts. The common goal of these experiments is to use C++ library from within JavaScript by using node-ffi. For each example, I will firstly explain the C++ library that is going to be used, and then explain how to use that library in JavaScript.
+
+<h1 id="1">FFI Experiments</h1>
+
+Our FFI experiments consist of 4 parts. The common goal of these experiments is to use C++ library from within JavaScript by using node-ffi. For each example, I will firstly explain the C++ library that is going to be used, and then explain how to use that library in JavaScript.
 
 ## BasicUsage
 
@@ -110,15 +123,33 @@ Code for this test is in path "./sourceCode/cpp/2DPoint.js".
 In this test, I've created a point at (3,4) and the other at (1,2) by using the
 `create2DPoint` function.
 After that, I draw these two points with the help of `draw2DPoint`.
-Final result is an image as shown below:
+You can click [here](https://github.com/shenlin192/Projet-de-R-D/blob/master/sourceCode/2DPoints/draw2DPoint.svg)
+to see the result.
 
-![](https://github.com/shenlin192/My-little-technique/blob/master/Images/branch.PNG)
-![](https://github.com/shenlin192/Projet-de-R-D/blob/master/sourceCode/2DPoints/draw2DPoint.svg)
+### Go further
+Instead of using a wrapper to invoke DGtal functions, it would be much easier and more
+straightforward to invoke DGtal functions directly.
 
-# SWIG Experiments
+Use command `$ objdump -S lib2DPointsLib.so |less`, I found out that the symbol of the constructor for a 2 dimension point is `_ZN5DGtal11PointVectorILj2EiSt5arrayIiLm2EEEC1ERKiS5_` as shown in the following figure
+![](/images/assembleSymbol)
+
+So, I tried to use `_ZN5DGtal11PointVectorILj2EiSt5arrayIiLm2EEEC1ERKiS5_` in the 2DPoint test. However,
+node FFI can not find this symbol and shows "SyntaxError: Unexpected identifier". I've verified many times
+that this symbol does exist in the shared object library file. But I can't figure out why there will be an
+Unexpected identifier error.
+
+<h1 id="2">SWIG Experiments</h1>
+## Prerequisite
+
+## interface file
+
+## head file
+
+## test file
 
 
-# Clang and LLVM
+<h1 id="3">Clang and LLVM Experiments</h1>
+
 ## Prerequisite
 
 1. CMake 2.8.6 or later
@@ -174,11 +205,50 @@ Thus, we need to add swap space manually. The following code shows how to add 4G
 2. `$ mkswap /swapfile`
 3. `$ swapon /swapfile`
 
+If you run out of swap space, you will get an error like this:
+![](/images/errorMessage.png)
+
 ## Display the AST
 
 The following command can be used to display the AST of a chosen c/c++ file
+
 `$ clang -Xclang -ast-dump -fsyntax-only <file_name>`
 
+### A simple example
 
-C1Edd version double constructor
-C1Eii verstion int constructor
+```
+int f(int x) {
+  int result = (x / 42);
+  return result;
+}
+```
+![](/images/simpleExample.png)
+
+The top-level declaration in a translation unit is always the `translation unit declaration`. In this example, our first user-written declaration is the function declaration of “f”. The body of “f” is a `compound statement`, whose child nodes are a `declaration statement` that declares our result variable, and the return statement.
+
+
+### A deliberated error
+
+```
+int a =1;
+
+int function (){
+  while (a==1){
+    a++;
+  };
+  int b=3;
+  int b=4;
+}
+```
+
+![](/images/test.cc.png)
+
+In this example, our deliberately redefined variable `b` in a function body is detected as an error.
+The `while` block corresponds to the `WhileStmt`.
+
+
+I've made [notes](/clang/readme.md) on some basic symbols of Clang.
+For more information, you need to visit [clang's official site](http://clang.llvm.org/docs/IntroductionToTheClangAST.html)
+
+<!-- C1Edd version double constructor
+C1Eii verstion int constructor -->
