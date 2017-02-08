@@ -111,7 +111,8 @@ In this test, I've created a point at (3,4) and the other at (1,2) by using the
 `create2DPoint` function.
 After that, I draw these two points with the help of `draw2DPoint`.
 Final result is an image as shown below
-![draw2DPoint](/sourceCode/2DPoints/draw2DPoint.svg "Draw 2 points")
+
+![draw2DPoint](https://github.com/shenlin192/Projet-de-R-D/tree/master/sourceCode/2DPoints/draw2DPoint.svg "Draw 2 points")
 
 
 
