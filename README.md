@@ -39,17 +39,10 @@ The source code to test a library for this experiment is in path "./sourceCode/j
 In this test, we have accomplished to
 
 1. Use the function `add` in JavaScript
-<<<<<<< HEAD
 2. Create a `Rectangle` object directly in JavaScript
 3. Create a `Rectangle` object in C++ from existing buffer (directly invoke C++ constructor of BasicUsage Library)
 4. Create a `Rectangle` object by using the `createRectObj` function
 5. Create a `Rectangle` object pointer by using the `createRectPtr` function
-=======
-2. Create a `Rectangle` object directly in JavaScript
-3. Create a `Rectangle` object in C++ from existing buffer (directly invoke C++ constructor of BasicUsage Library)
-4. Create a `Rectangle` object by using the `createRectObj` function
-5. Create a `Rectangle` object pointer by using the `createRectPtr` function
->>>>>>> 02f9e0676b5e737a5716332874a0d8367e1fa6da
 6. Encapsulate the creation of C++ object into JavaScript function prototype, so that we can use that object with JavaScript syntax.
 
 In order to create a C++ class object with Node FFI, we need to firstly define a structure that has the same attributes in JavaScript code as the class in C++ code. The definition of a structure in JavaScript can be done by requiring the "ref-struct" model of Node. Moreover, if we to want get the reference of any variable defined in JavaScript, we will need the "ref" model of Node.
@@ -68,17 +61,11 @@ It's a must to implement all the types that we are going to use lately in this l
 Source code for testing this experiment is in path "./sourceCode/js/Template".
 Similar to what we have done for BasicUsage's test, this experiment has:
 
-<<<<<<< HEAD
+
 1. Create a `Rectangle` object directly in JavaScript
 2. Create a `Rectangle` object in C++ from existing buffer (directly invoke C++ constructor of Template Library)
 3. Create a `Rectangle` object by using the `createRectObj` function
 4. Create a `Rectangle` object pointer by using the `createRectPtr` function
-=======
-1. Create a `Rectangle` object directly in JavaScript
-2. Create a `Rectangle` object in C++ from existing buffer (directly invoke C++ constructor of Template Library)
-3. Create a `Rectangle` object by using the `createRectObj` function
-4. Create a `Rectangle` object pointer by using the `createRectPtr` function
->>>>>>> 02f9e0676b5e737a5716332874a0d8367e1fa6da
 5. Encapsulate the creation of C++ object into JavaScript function prototype, so that we can use that object with JavaScript syntax.
 
 The main difference is, this time in the JavaScript file, we have to specific which type (int or double) of the template classes or functions is needed. It's worth noting that, in order to distinguish functions or classes that have the same name in C++ source file, the compiler does  something called "name mangling", so that after compilation, each function or class will only have a unique name. In our experiment for example, `_Z13createRectObjii` reprensents the `Rectangle<int> createRectObj(int a, int b)` function in source code; `_Z13createRectObjdd` represents the `Rectangle<double> createRectObj(double a, double b)` .
@@ -96,11 +83,9 @@ The source code for boost timer test is in path "./sourceCode/js/Boost.js". The 
 ## 2DPoint
 ### 2DPoint library
 Source code to create library for Boost experiment is in path "./sourceCode/cpp/2DPoint.cpp".
-<<<<<<< HEAD
+
 In the source code, there are two functions, both of which are wappers that used as the media to invoke DGtal functions.
-=======
-In the source code, there are two functions, both of which are wappers that used as the media to invoke DGtal functions.
->>>>>>> 02f9e0676b5e737a5716332874a0d8367e1fa6da
+
 
 `Point* create2DPoint(int a, int b){
 	return new Point(a,b);
