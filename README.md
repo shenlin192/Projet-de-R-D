@@ -40,7 +40,7 @@ In this test, we have accomplished to
 
 1. Use the function `add` in JavaScript
 2. Create a `Rectangle` object directly in JavaScript 
-3. Create a `Rectangle` object in C++ from existing buffer (directly using C++ constructor)
+3. Create a `Rectangle` object in C++ from existing buffer (directly invoke C++ constructor of BasicUsage Library)
 4. Create a `Rectangle` object by using the `createRectObj` function 
 5. Create a `Rectangle` object pointer by using the `createRectPtr` function 
 6. Encapsulate the creation of C++ object into JavaScript function prototype, so that we can use that object with JavaScript syntax.
@@ -62,7 +62,7 @@ Source code for testing this experiment is in path "./sourceCode/js/Template".
 Similar to what we have done for BasicUsage's test, this experiment has:
 
 1. Create a `Rectangle` object directly in JavaScript 
-2. Create a `Rectangle` object in C++ from existing buffer
+2. Create a `Rectangle` object in C++ from existing buffer (directly invoke C++ constructor of Template Library)
 3. Create a `Rectangle` object by using the `createRectObj` function 
 4. Create a `Rectangle` object pointer by using the `createRectPtr` function 
 5. Encapsulate the creation of C++ object into JavaScript function prototype, so that we can use that object with JavaScript syntax.
@@ -82,17 +82,73 @@ The source code for boost timer test is in path "./sourceCode/js/Boost.js". The 
 ## 2DPoint
 ### 2DPoint library
 Source code to create library for Boost experiment is in path "./sourceCode/cpp/2DPoint.cpp".
+In the source code, there are two functions, both of which are wappers that used as the media to invoke DGtal functions. 
+
+`Point* create2DPoint(int a, int b){
+	return new Point(a,b);
+}`
+
+Where `Point()` is a build-in constructor of DGtal.
+
+
+`void draw2DPoint(Point p1, Point p2){
+	Board2D board;
+	board << p1<<p2;
+	board.saveSVG("draw2DPoint.svg");
+}`
+
+Where `Board2D` is a build-in class of DGtal.
 
 ### 2DPoint test
+Code for this test is in path "./sourceCode/cpp/2DPoint.js".
 
-##You can click [here](https://www.sharelatex.com/project/58340f92c0f0db5876a1a377) to read the report of this project
+
 
 # Clang and LLVM
 ## Prerequest
-1. 
-2. 
-3. 
+
+1. CMake 2.8.6 or later
+2. 30G disk space
+3. 6G swap space
+
 ## Install
+
+1. Download llvm:
+`$ cd where-you-want-llvm-to-live`
+`$ svn co http://llvm.org/svn/llvm-project/llvm/trunk llvm`
+
+2. Download Clang:
+`$ cd where-you-want-llvm-to-live`
+`$ cd llvm/tools`
+`$ svn co http://llvm.org/svn/llvm-project/cfe/trunk clang`
+
+3. Download Comlile-RT:
+`$ cd where-you-want-llvm-to-live`
+`$ cd llvm/projects`
+`$ svn co http://llvm.org/svn/llvm-project/compiler-rt/trunk compiler-rt`
+
+4. Install
+
+`$ cd where you want to build llvm`
+`$ mkdir build`
+`$ cd build`
+`$ cmake -G Unix Makefiles <path to llvm sources>`
+
+5. Make. This will take a very long time
+
+`$ cd where you want to build llvm`
+`$ make`
+
+## How to increase your swap space?
+As mentioned in prerequest, at least 6GB swap space is needed to install LLVM.
+However, by default, the swap space is the size of memory, which may be less than 6GB.
+Thus, we need to add swap space manually. The following code shows how to add 4GB to swap space.
+
+1. `$ dd if=/dev/zero of=/swapfile bs=1024 count=4000000` 
+2. `$ mkswap /swapfile`
+3. `$ swapon /swapfile`
+
+## Display the AST
 
 C1Edd version double constructor
 C1Eii verstion int constructor
