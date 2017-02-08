@@ -28,4 +28,9 @@ http://icooke.blog.51cto.com/4123148/815598
 
 `$ baobab`
 
+## llvm
+Run the following command inside llvm folder
+
+`$ clang-check-3.5 tools/clang/tools/clang-check/ClangCheck.cpp -ast-dump -ast-dump-filter ActionFactory::newASTConsumer`
+
 

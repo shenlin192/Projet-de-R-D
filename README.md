@@ -85,16 +85,54 @@ Source code to create library for Boost experiment is in path "./sourceCode/cpp/
 
 ### 2DPoint test
 
-##You can click [here](https://www.sharelatex.com/project/58340f92c0f0db5876a1a377) to read the report of this project
+
 
 # Clang and LLVM
 ## Prerequest
-1. 
-2. 
-3. 
+
+1. CMake 2.8.6 or later
+2. 30G disk space
+3. 6G swap space
+
 ## Install
+
+1. Download llvm:
+`$ cd where-you-want-llvm-to-live`
+`$ svn co http://llvm.org/svn/llvm-project/llvm/trunk llvm`
+
+2. Download Clang:
+`$ cd where-you-want-llvm-to-live`
+`$ cd llvm/tools`
+`$ svn co http://llvm.org/svn/llvm-project/cfe/trunk clang`
+
+3. Download Comlile-RT:
+`$ cd where-you-want-llvm-to-live`
+`$ cd llvm/projects`
+`$ svn co http://llvm.org/svn/llvm-project/compiler-rt/trunk compiler-rt`
+
+4. Install
+
+`$ cd where you want to build llvm`
+`$ mkdir build`
+`$ cd build`
+`$ cmake -G Unix Makefiles <path to llvm sources>`
+
+5. Make. This will take a very long time
+
+`$ cd where you want to build llvm`
+`$ make`
+
+## How to increase your swap space?
+As mentioned in prerequest, at least 6GB swap space is needed to install LLVM.
+However, by default, the swap space is the size of memory, which may be less than 6GB.
+Thus, we need to add swap space manually. The following code shows how to add 4GB to swap space.
+
+1. `$ dd if=/dev/zero of=/swapfile bs=1024 count=4000000` 
+2. `$ mkswap /swapfile`
+3. `$ swapon /swapfile`
 
 C1Edd version double constructor
 C1Eii verstion int constructor
+
 
 
