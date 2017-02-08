@@ -118,41 +118,41 @@ Code for this test is in path "./sourceCode/cpp/2DPoint.js".
 
 1. Download llvm:
 
-	`$ cd where-you-want-llvm-to-live`
+		`$ cd where-you-want-llvm-to-live`
 
-	`$ svn co http://llvm.org/svn/llvm-project/llvm/trunk llvm`
+		`$ svn co http://llvm.org/svn/llvm-project/llvm/trunk llvm`
 
 2. Download Clang:
 
-	`$ cd where-you-want-llvm-to-live`
+		`$ cd where-you-want-llvm-to-live`
 
-	`$ cd llvm/tools`
+		`$ cd llvm/tools`
 
-	`$ svn co http://llvm.org/svn/llvm-project/cfe/trunk clang`
+		`$ svn co http://llvm.org/svn/llvm-project/cfe/trunk clang`
 
 3. Download Comlile-RT:
 
-	`$ cd where-you-want-llvm-to-live`
+		`$ cd where-you-want-llvm-to-live`
 
-	`$ cd llvm/projects`
+		`$ cd llvm/projects`
 
-	`$ svn co http://llvm.org/svn/llvm-project/compiler-rt/trunk compiler-rt`
+		`$ svn co http://llvm.org/svn/llvm-project/compiler-rt/trunk compiler-rt`
 
 4. Install
 
-	`$ cd where you want to build llvm`
+		`$ cd where you want to build llvm`
 
-	`$ mkdir build`
+		`$ mkdir build`
 
-	`$ cd build`
+		`$ cd build`
 
-	`$ cmake -G Unix Makefiles <path to llvm sources>`
+		`$ cmake -G Unix Makefiles <path to llvm sources>`
 
 5. Make. This will take a very long time
 
-	`$ cd where you want to build llvm`
+		`$ cd where you want to build llvm`
 
-	`$ make`
+		`$ make`
 
 ## How to increase your swap space?
 As mentioned in prerequest, at least 6GB swap space is needed to install LLVM.
