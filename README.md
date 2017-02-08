@@ -110,9 +110,10 @@ Code for this test is in path "./sourceCode/cpp/2DPoint.js".
 In this test, I've created a point at (3,4) and the other at (1,2) by using the
 `create2DPoint` function.
 After that, I draw these two points with the help of `draw2DPoint`.
-Final result is an image as shown below
+Final result is an image as shown below:
 
-![draw2DPoint](https://github.com/shenlin192/Projet-de-R-D/blob/master/sourceCode/2DPoints/draw2DPoint.svg)
+![](https://github.com/shenlin192/My-little-technique/blob/master/Images/branch.PNG)
+![](https://github.com/shenlin192/Projet-de-R-D/blob/master/sourceCode/2DPoints/draw2DPoint.svg)
 
 # SWIG Experiments
 
