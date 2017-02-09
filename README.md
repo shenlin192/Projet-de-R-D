@@ -4,13 +4,6 @@ This project aims to provide a JavaScript command interpreter for [DGtal](http:/
 
 You can click [here](https://www.sharelatex.com/project/58340f92c0f0db5876a1a377) to read a full report.
 
-# Contents:
-
-* [FFI Experiments](#1)
-
-* [SWIG Experiments](#2)
-
-* [Clang and LLVM Experiments](#3)
 
 ## prerequest
 1. A Linux system
@@ -32,6 +25,13 @@ You can click [here](https://www.sharelatex.com/project/58340f92c0f0db5876a1a377
 
 All the file path configuration are in a `CMakeLists.txt` under the `sourceCode` directory. If you want to change the structure of this project, just modify this file and rerun the `cmake` and `make` command.
 
+# Contents:
+
+* [FFI Experiments](#1)
+
+* [SWIG Experiments](#2)
+
+* [Clang and LLVM Experiments](#3)
 
 <h1 id="1">FFI Experiments</h1>
 
@@ -86,7 +86,7 @@ The main difference is, this time in the JavaScript file, we have to specific wh
 ## Boost
 ### Boost library
 Source code to create library for Boost experiment is in path "./sourceCode/cpp/Boost.cpp".
-Since there are numbers of functions predefined in Boost, we chose only one of them to test if Boost can cooperate with node-ffi. In this experiment, the `timer` and `progress` of Boost are chosen as for testing.  
+Since there are numbers of functions predefined in Boost, we chose only some of them to test if Boost can cooperate with node-ffi. In this experiment, the `timer` and `progress` of Boost are chosen as for testing.  
 
 It's worth noting that we do not expose Boost directly to node-ffi. Instead, we created a wrapper function `testBoost` containing the necessary C++ code of Boost for lately using.
 
@@ -131,7 +131,7 @@ Instead of using a wrapper to invoke DGtal functions, it would be much easier an
 straightforward to invoke DGtal functions directly.
 
 Use command `$ objdump -S lib2DPointsLib.so |less`, I found out that the symbol of the constructor for a 2 dimension point is `_ZN5DGtal11PointVectorILj2EiSt5arrayIiLm2EEEC1ERKiS5_` as shown in the following figure
-![](/images/assembleSymbol)
+![](/images/assembleSymbol.png)
 
 So, I tried to use `_ZN5DGtal11PointVectorILj2EiSt5arrayIiLm2EEEC1ERKiS5_` in the 2DPoint test. However,
 node FFI can not find this symbol and shows "SyntaxError: Unexpected identifier". I've verified many times
@@ -140,16 +140,101 @@ Unexpected identifier error.
 
 <h1 id="2">SWIG Experiments</h1>
 ## Prerequisite
+1.  [SWIG version 3.0 +](http://www.swig.org/)
 
-## interface file
+## How to use
+General process of using SWIG's JavaScript interface generators for Node.js are the following 5 steps:
 
-## head file
+1. Organize all c/c++ logic ( libraries that you want to use) in the form of header files.
+2. Write a SWIG interface file that indicates which libraries should be used  
+3. Create a binding file binding.gyp
+4. Run the following commands:
 
-## test file
+  `$ swig -c++ -javascript -node mylib.i` //create a wrapper file
+  `$ node-gyp build` // build a node module
+
+5. After step 4, a node module containing all functions, variables, classes, etc of your c/c++
+libraries will be built.
+
+## Experiments
+Source code of this experiment is in path "./swig".
+### Library files
+`global.h`, `rectangle.h`, `templateExample.h` and `TestBoost.h` are the library files for this experiment.
+`global.h` contains some simple global functions and global variables. The three rest library files are similar
+to the `BasicUsage Library`, `Template Library` and `Boost Library` in FFI experiments, which are already explained.
+
+### SWAG interface file
+This file indicates which libraries are needed and some more information telling SWAG how to use these libraries. For example, the types of a template should be specified; global functions as well as global variables should be declared with the keywork `extern`.
+
+```
+%module "mylib"
+
+%{
+#include "global.h"
+#include "rectangle.h"
+#include "TestBoost.h"
+#include "templateExample.h"
+%}
+
+%include "global.h";
+%include "rectangle.h";
+%include "TestBoost.h";
+%include "templateExample.h"
+%template (intRectangle) RectangleT<int>;
+%template (floatRectangle) RectangleT<float>;
+
+ extern double My_variable;
+ extern int fact(int n);
+ extern int my_mod(int x, int y);
+ extern char *get_time();
+```
+
+Now, you can run the command `$ swig -c++ -javascript -node mylib.i`.
+After that, a wrapper file called `mylib_wrap.cxx` will be created.
+
+### Binding file
+A binding file is used to tell Node.js how to create a node module from a SWIG wrapper (in this example `mylib_wrap.cxx`) file.
+```
+{
+  "targets": [
+    {
+      "target_name": "mylib",
+      "sources": [ "mylib_wrap.cxx" ]
+    }
+  ]
+}
+
+```
+Run `$ node-gyp configure` and then `node-gyp build`. A node module called `mylib` will be built in
+path `./swig/build/Release/mylib`.
+
+### Test file
+The test file is in path "./swig/test.js". I've tried all the libraries mentioned before in this file.
+All of them work as expected. The following code snippets will show you how to use such a node module.
+
+1. Require the node module that you generated.
+    `var mylib = require("./build/Release/mylib");`
+
+2. Usage of global variables and functions
+    ```
+    console.log(mylib.My_variable);
+    console.log(mylib.fact(5));
+    ```
+3. Usage of a class
+    `var rectangle = new mylib.Rectangle(5,6);`
+4. Usage of template
+    `var intRectangle = new mylib.intRectangle(3,4)`
+    `console.log(intRectangle.area())`
+5. Usage of Boost
+    `var boost = new mylib.TestBoost();`
+    `boost.boostTimer();`
+
+### Go further
+
+
 
 
 <h1 id="3">Clang and LLVM Experiments</h1>
-
 ## Prerequisite
 
 1. CMake 2.8.6 or later
