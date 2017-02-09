@@ -143,7 +143,7 @@ Unexpected identifier error.
 1.  [SWIG version 3.0 +](http://www.swig.org/)
 
 ## How to use
-General process of using SWIG's JavaScript interface generators for Node.js are the following 5 steps:
+The general process of using SWIG's JavaScript interface generators for Node.js are the following 5 steps:
 
 1. Organize all c/c++ logic ( libraries that you want to use) in the form of header files.
 2. Write a SWIG interface file that indicates which libraries should be used  
@@ -157,14 +157,14 @@ General process of using SWIG's JavaScript interface generators for Node.js are 
 libraries will be built.
 
 ## Experiments
-Source code of this experiment is in path "./swig".
+The source code of this experiment is in path "./swig".
 ### Library files
 `global.h`, `rectangle.h`, `templateExample.h` and `TestBoost.h` are the library files for this experiment.
 `global.h` contains some simple global functions and global variables. The three rest library files are similar
 to the `BasicUsage Library`, `Template Library` and `Boost Library` in FFI experiments, which are already explained.
 
 ### SWAG interface file
-This file indicates which libraries are needed and some more information telling SWAG how to use these libraries. For example, the types of a template should be specified; global functions as well as global variables should be declared with the keywork `extern`.
+This file indicates which libraries are needed and some more information telling SWAG how to use these libraries. For example, the types of a template should be specified; global functions, as well as global variables, should be declared with the key word `extern`.
 
 ```
 %module "mylib"
@@ -213,7 +213,9 @@ The test file is in path "./swig/test.js". I've tried all the libraries mentione
 All of them work as expected. The following code snippets will show you how to use such a node module.
 
 1. Require the node module that you generated.
-    `var mylib = require("./build/Release/mylib");`
+    ```
+    var mylib = require("./build/Release/mylib");
+    ```
 
 2. Usage of global variables and functions
     ```
@@ -221,17 +223,25 @@ All of them work as expected. The following code snippets will show you how to u
     console.log(mylib.fact(5));
     ```
 3. Usage of a class
-    `var rectangle = new mylib.Rectangle(5,6);`
+    ```
+    var rectangle = new mylib.Rectangle(5,6);
+    ```
+
 4. Usage of template
-    `var intRectangle = new mylib.intRectangle(3,4)`
-    `console.log(intRectangle.area())`
+    ```
+    var intRectangle = new mylib.intRectangle(3,4)
+    console.log(intRectangle.area())
+    ```
+
 5. Usage of Boost
-    `var boost = new mylib.TestBoost();`
-    `boost.boostTimer();`
+    ```
+    var boost = new mylib.TestBoost();
+    boost.boostTimer();
+    ```
 
 ### Go further
-
-
+In FFI experiments, I can link the DGtal library into a shared object by configuring the `CMakeLists.txt` file.
+But in SWIG experiments, I still haven't found an equivalent way to link the DGtal library, and thus the 2DPoint experiment is not yet done. I believe SWIG must have provided some options to do this linking but I don't have enough time to do the research.
 
 
 <h1 id="3">Clang and LLVM Experiments</h1>
