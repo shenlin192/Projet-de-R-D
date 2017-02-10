@@ -1,3 +1,7 @@
+'use strict';
+
+/* eslint-env node */
+
 // Problem 1 input output stream
 // Problem 2 use C++ 2D point constructor will lead to unexpected result
 const ref = require('ref');
@@ -18,8 +22,8 @@ var Dgtal = ffi.Library('../../build/2DPoints/lib/lib2DPointsLib', {
 
     _Z13create2DPointii: [PointStructRef, ['int', 'int']], //ok
     _Z11draw2DPointN5DGtal11PointVectorILj2EiSt5arrayIiLm2EEEES3_: [
-        'void', [PointStructRef, PointStructRef]
-    ] //ok
+        'void', [PointStructRef, PointStructRef],
+    ], //ok
 
     //Dgtal 2D point constructor
     //SyntaxError: Unexpected identifier
@@ -30,12 +34,12 @@ var Dgtal = ffi.Library('../../build/2DPoints/lib/lib2DPointsLib', {
 });
 
 // 1 Using a custom difine constructor
-var p1 = Dgtal._Z13create2DPointii(3, 4)
+let p1 = Dgtal._Z13create2DPointii(3, 4);
 console.log(p1); // <Buffer@0x38c49b0 03 00 00 00 04 00 00 00>
 
 
 // 2 Create points by JavaScript
-var p2 = new PointStruct();
+let p2 = new PointStruct();
 p2.x = 1;
 p2.y = 2;
 console.log(p2);
