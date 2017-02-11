@@ -6,6 +6,8 @@
 
 #ignore the build folder
 build/
+build2/
+oldBuild/
 
 #ignore the boost folder
 boost/

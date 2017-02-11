@@ -58,10 +58,23 @@ In this test, we have accomplished to
 5. Create a `Rectangle` object pointer by using the `createRectPtr` function
 6. Encapsulate the creation of C++ object into JavaScript function prototype, so that we can use that object with JavaScript syntax.
 
-In order to create a C++ class object with Node FFI, we need to firstly define a structure that has the same attributes in JavaScript code as the class in C++ code. The definition of a structure in JavaScript can be done by requiring the "ref-struct" model of Node. Moreover, if we to want to get the reference of any variable defined in JavaScript, we will need the "ref" model of Node.
+In order to create a C++ class object with Node FFI, we need to firstly define a structure that has the same attributes in JavaScript code as the class in C++ code. The definition of a structure in JavaScript can be done by requiring the "ref-struct" model of Node. Moreover, if we to want to get the reference of any variable defined in JavaScript, we will need the "ref" module of Node.
+
+```
+const ref = require('ref');//require "ref" module of Node
+const Struct = require('ref-struct');//require "ref-struct" module of Node
+
+var PointStruct = Struct({
+    'x': 'int',
+    'y': 'int',
+});//define a structure 
+```
 
 In order to use a C++ class's functions, such as its constructors or member functions, in Node-ffi, the reference of an object created by that class should be passed into these functions as their default parameters.
 
+```
+const RectanglePtrType = ref.refType(RectangleType);//get the reference of a self-define structure
+```
 
 ## Template
 ### Template Library
@@ -130,13 +143,19 @@ to see the result.
 Instead of using a wrapper to invoke DGtal functions, it would be much easier and more
 straightforward to invoke DGtal functions directly.
 
-Use command `$ objdump -S lib2DPointsLib.so |less`, I found out that the symbol of the constructor for a 2 dimension point is `_ZN5DGtal11PointVectorILj2EiSt5arrayIiLm2EEEC1ERKiS5_` as shown in the following figure
-![](/images/assembleSymbol.png)
+Use command `$ objdump -S lib2DPointsLib.so |less`, we found out that the symbol of the constructor for a 2 dimension point is `_ZN5DGtal11PointVectorILj2EiNSt3__15arrayIiLm2EEEEC1ERKiS6_`.
 
-So, I tried to use `_ZN5DGtal11PointVectorILj2EiSt5arrayIiLm2EEEC1ERKiS5_` in the 2DPoint test. However,
-node FFI can not find this symbol and shows "SyntaxError: Unexpected identifier". I've verified many times
-that this symbol does exist in the shared object library file. But I can't figure out why there will be an
-Unexpected identifier error.
+So, we try to use `_ZN5DGtal11PointVectorILj2EiNSt3__15arrayIiLm2EEEEC1ERKiS6_` in the 2DPoint test. It's worth noting
+that after name unmangling, we get `DGtal::PointVector<2u, int, std::__1::array<int, 2ul> >::PointVector(int const&, int const&)` which means it will take two int references as parameters instead of two int variables.
+
+In order to set the value to an int reference, `ref.alloc()` is needed:
+```
+let i1 = ref.alloc(ref.types.int, 2);
+let i2 = ref.alloc(ref.types.int, 9);
+```
+
+The output of using the DGtal 2D point constructor is exactly the same as using the `create2DPoint` wrapper function.
+
 
 <h1 id="2">SWIG Experiments</h1>
 ## Prerequisite
@@ -163,8 +182,8 @@ The source code of this experiment is in path "./swig".
 `global.h` contains some simple global functions and global variables. The three rest library files are similar
 to the `BasicUsage Library`, `Template Library` and `Boost Library` in FFI experiments, which are already explained.
 
-### SWAG interface file
-This file indicates which libraries are needed and some more information telling SWAG how to use these libraries. For example, the types of a template should be specified; global functions, as well as global variables, should be declared with the key word `extern`.
+### SWIG interface file
+This file indicates which libraries are needed and some more information telling SWIG how to use these libraries. For example, the types of a template should be specified; global functions, as well as global variables, should be declared with the key word `extern`.
 
 ```
 %module "mylib"

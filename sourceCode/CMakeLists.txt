@@ -5,9 +5,9 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 
 FIND_PACKAGE(DGtal REQUIRED)
 
-#message(${DGTAL_INCLUDE_DIRS}) /usr/local/include/usr/include
-#message(${DGTAL_LIBRARY_DIRS}) /usr/local/lib
-#message(${DGTAL_LIBRARIES}) DGtalDGtalIO
+message(${DGTAL_INCLUDE_DIRS}) #/usr/local/include/usr/include
+message(${DGTAL_LIBRARY_DIRS}) #/usr/local/lib
+#message(${DGTAL_LIBRARIES}) #DGtalDGtalIO
 
 INCLUDE_DIRECTORIES(${DGTAL_INCLUDE_DIRS})
 LINK_DIRECTORIES(${DGTAL_LIBRARY_DIRS})
@@ -52,14 +52,6 @@ file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/${name}/lib")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/${name}/lib)
 add_library(${name}Lib SHARED ./${name}/${name})
 target_link_libraries(${name}Lib ${DGTAL_LIBRARIES})
-
-
-
-
-
-
-
-
 
 
 

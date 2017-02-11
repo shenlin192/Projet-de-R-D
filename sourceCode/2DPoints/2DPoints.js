@@ -16,27 +16,43 @@ var PointStruct = Struct({
 var PointStructRef = ref.refType(PointStruct);
 var intRef = ref.refType('int');
 
-var Dgtal = ffi.Library('../../build/2DPoints/lib/lib2DPointsLib', {
+var Dgtal = ffi.Library('../../build2/2DPoints/lib/lib2DPointsLib', {
     // _ZNSt15binary_functionIN5DGtal11PointVectorILj2EiSt5arrayIiLm2EEEES4_dEC1Ev: [
     //     PointStructRef, [PointStructRef, 'int', 'int'] // fail
     // ],
 
     _Z13create2DPointii: [PointStructRef, ['int', 'int']], //ok
-    _Z11draw2DPointN5DGtal11PointVectorILj2EiNSt3__15arrayIiLm2EEEEES4_: [
-        'void', [PointStructRef, PointStructRef],
-    ], //ok
+
+    
+    _Z11draw2DPointN5DGtal11PointVectorILj2EiSt5arrayIiLm2EEEES3_: [
+    	'void', [PointStructRef, PointStructRef],
+    ]
+    
+    _ZN5DGtal11PointVectorILj2EiSt5arrayIiLm2EEEC1ERKiS5_:[
+    	PointStructRef, [PointStructRef, intRef, intRef],
+    ]
+
+    //_ZN5DGtal11PointVectorILj2EiSt5arrayIiLm2EEEC1ERKiS5_: [
+    //	PointStructRef, [PointStructRef, intRef, intRef],
+    //],
+
 
     //Dgtal 2D point constructor
     //SyntaxError: Unexpected identifier
-    _ZN5DGtal11PointVectorILj2EiNSt3__15arrayIiLm2EEEEC1ERKiS6_: [
-        PointStructRef, [PointStructRef, intRef, intRef],
-    ], // fail
+    //_ZN5DGtal11PointVectorILj2EiNSt3__15arrayIiLm2EEEEC1ERKiS6_: [
+    //    PointStructRef, [PointStructRef, intRef, intRef],
+    //],
+    
+    //_Z11draw2DPointN5DGtal11PointVectorILj2EiNSt3__15arrayIiLm2EEEEES4_: [
+    //    'void', [PointStructRef, PointStructRef],
+    //], 
+    
 
 });
 
 // 1 Using a custom difine constructor
 let p1 = Dgtal._Z13create2DPointii(3, 4);
-console.log(p1); // <Buffer@0x38c49b0 03 00 00 00 04 00 00 00>
+console.log('p1: ',p1); // <Buffer@0x38c49b0 03 00 00 00 04 00 00 00>
 
 
 // 2 Create points by JavaScript
@@ -46,7 +62,9 @@ p2.y = 2;
 // { x: 1,
 //   y: 2,
 //   'ref.buffer': <Buffer@0x38aab70 01 00 00 00 02 00 00 00> }
-Dgtal._Z11draw2DPointN5DGtal11PointVectorILj2EiNSt3__15arrayIiLm2EEEEES4_(p1, p2.ref());
+//Dgtal._Z11draw2DPointN5DGtal11PointVectorILj2EiNSt3__15arrayIiLm2EEEEES4_(p1, p2.ref());
+
+Dgtal._Z11draw2DPointN5DGtal11PointVectorILj2EiSt5arrayIiLm2EEEES3_(p1, p2.ref())
 console.log('p2: ', p2);
 
 
@@ -54,6 +72,7 @@ console.log('p2: ', p2);
 let p3 = new PointStruct();
 let i1 = ref.alloc(ref.types.int, 2);
 let i2 = ref.alloc(ref.types.int, 9);
-Dgtal._ZN5DGtal11PointVectorILj2EiNSt3__15arrayIiLm2EEEEC1ERKiS6_(p3.ref(), i1, i2);
+//Dgtal._Z11draw2DPointN5DGtal11PointVectorILj2EiNSt3__15arrayIiLm2EEEEES4_(p3.ref(), i1, i2)
+//Dgtal._ZN5DGtal11PointVectorILj2EiSt5arrayIiLm2EEEC1ERKiS5_(p3.ref(), i1, i2);
 console.log('p3: ', p3);
 
