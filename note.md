@@ -1,5 +1,5 @@
 # Problems
-1. FFI can not find the DGtal 2D point constructor symble `SyntaxError: Unexpected identifier`
+1. FFI can not find the DGtal 2D point constructor symble `SyntaxError: Unexpected identifier` even though upgraded to the lastest version.
 2. Can not install llvm (collect2 error ld terminated with signal 9 killed)
 [Your virtual machine does not have enough memory to perform the linking phas](http://stackoverflow.com/questions/5682854/why-is-the-linker-terminating-on-me-when-i-build-clang)
 

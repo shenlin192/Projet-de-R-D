@@ -1,13 +1,17 @@
-By the end of the work, you should firstly summarise the main steps and key results of the study.  Then, you should describe the research directions that this work opens, both simple extensions and new endeavours.
+This chapter will firstly summarize the main steps and key results of the study. Then, it describes the research directions for future works.
 
 \section{Summary}
+This project starts with the problem on how to use DGtal, which is a C++ library, from Node.js. All the research and experiments are aiming to solve this problem. In order to figure out the mechanism of creating and using a C++ library, we have dug deep into different steps of C++ compilation, as well as JavaScript interpretation in the conception chapter\ref{chap:Conceptions}. After that, in chapter\ref{chap:Proposals} we have presented FFI and SIWG as possible solutions to connect a C++ library with Node.Js. Moreover, in order to adapt to the consistently evolve of DGtal, we proposed using Clang to upgrade our JavaScript support automatically. Finally, for proving these suppose, a number of experiments are done on FFI, SWIG and Clang as shown in chapter\ref{chap:Experiments}. As mentioned in the experiments' chapter, we have successfully invoked some DGtal functions from Node.js with the help of FFI module. For the experiments on SWIG, we are now capable of linking some self-defined C++ libraries with Node.js but still working on the link to DGtal. For the experiments on Clang, we have done the extraction of abstract syntax tree on some simply examples. It's just the beginning.
 
-Even if it is yet another repetition, it is convenient to summarise not the whole report but at least your own work and results, stressing their value.
 
 \section{Outcomes}
+The most important outcome of this project is that we have achieved to create objects from DGtal and to manipulate these objects by invoking the algorithms of the DGtal. To be more precisely, we have created 2 DGtal two-dimension points and draw them to a ".svg" file from the Node.Js environment. This is done by using the Node FFi module.
 
-The most valuable teachings of the work (there always have) must be emphasised.  Some can be personal.
+Another outcome is that we have successfully linked some self-defined C++ libraries to Node.js environment with the help of SIWG. Test results on these self-defined libraries using SWIG are the same as those using FFI module. 
+
+Lastly, we have tried out Clang for analyzing some simple C++ files' abstract syntax tree, which will help to accomplish the automatically upgrading of JavaScript support for future works.
 
 \section{Research directions}
 
-It is quite rare that a given work totally closes a topic!  Even in that case, it remains possible to introduce new research directions, more or less connected to the topic and the new state-of-the-art.  More generally, you can mention all and every question that has arisen during the course of yur work.
+This project is not yet finished. We have found a way to connect DGtal with Node.js, which is already the first milestone. For the future works, we need to focus on "clang" and its "lib tooling". They can analyze a C++ file's syntax and extract its abstract syntax tree, so we may use them to automatically evolve our JavaScript support that corresponds to DGtal's evolution.
+

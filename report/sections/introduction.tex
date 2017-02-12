@@ -3,11 +3,11 @@ This chapter is divided by 5 sections. Firstly we will talk about the statement 
 
 \section{Statement of the problem}
 
-DGtal\footnote{\url{http://dgtal.org/}} is a collaborative free project that aims to develop a set of efficient and generic algorithms in the field of discrete geometry. DGtal is presented in the form of a software library, documented and accompanied by sample codes, supplemented by extensions dedicated to specific applications (DGtalTools). DGtal is developed in C ++ and relies heavily on the free libraries Boost\footnote{\url{http://www.boost.org/}}. There is currently no tool to automate tasks or manipulate the library interactively. Using DGtal requires the development of a C ++ code, its compilation and then its execution.
+DGtal\footnote{\url{http://dgtal.org/}} is a collaborative free project that aims to develop a set of efficient and generic algorithms in the field of discrete geometry. It is presented in the form of a software library, documented and accompanied by sample codes, supplemented by extensions dedicated to specific applications (DGtalTools). DGtal is developed in C ++ and relies heavily on the free libraries Boost\footnote{\url{http://www.boost.org/}}. There is currently no tool to automate tasks or manipulate the library interactively. Thus, using DGtal requires the development of a ++ code, its compilation and then its execution.
 
 \section{Objectives}
 
-This project consists of equipping DGtal with a JavaScript command interpreter, invoked from nodejs\footnote{\url{https://nodejs.org/en/}} capable of:
+This project aims to provide a JavaScript command interpreter for DGtal, by using NodeJs,\footnote{\url{https://nodejs.org/en/}} capable of:
 \begin{itemize}
     \item creating objects from the library (e.g. a discrete point, a line ...)
     \item importing and exporting representations of these objects
@@ -35,19 +35,25 @@ var line = new line2D(point1,point2);
 line.rotate(30);
         \end{lstlisting}
 
-In this example, function "point2D", "line2D" and "rotate" are all predefined in the C++ Dgtal library and they are supposed to be used directly by the JavaScript code. Final implementation might not be different from this example in details, but the main idea will be the same: provide an inter-medium that enables using the functionalists of "Dgtal" from JavaScript.
+In this example, function "point2D", "line2D" and "rotate" are all predefined in the C++ DGtal library and they are supposed to be used directly by the JavaScript code. The final implementation might not be different from this example in details, but the main idea will be the same: provide an inter-medium that enables using the functionalists of "DGtal" from JavaScript.
+
 
 \section{Work achieved}
 
 As mentioned before, the goal of this project is to provide DGtal with a JavaScript command interpreter. So first and foremost, we have to find a way to "link" or "connect" JavaScript codes with C++ codes. That's what we have been doing from the beginning of the project until now.
 
-We have successfully used three node modules\footnote{\url{https://github.com/node-ffi/node-ffi/wiki/Node-FFI-Tutorial}} ("ffi", "ref", "ref-struct") to invoke functions in share objects (also called dynamic link library), which are generated automatically by C++ code. Moreover, after numbers of experiments, we have validated that this works well with C++ basic codes, C++ codes using templates as well as C++ codes using "boost".  
 
-The newest discovery is, we have found that by using the latest versions of "SWIG"\footnote{\url{http://www.swig.org/Doc3.0/Javascript.html}} , we may be able to achieve the same goal in a much easier way. And we have also validated this tool works well with basic C++ codes, template C++ codes and most parts of "boost".
+We have successfully used three node modules\footnote{\url{https://github.com/node-ffi/node-ffi/wiki/Node-FFI-Tutorial}} ("ffi", "ref", "ref-struct") to invoke functions in shared objects (also called dynamic link library), which are generated automatically by C++ code. Moreover, after numbers of experiments, we have validated that this works well with C++ basic codes, C++ codes using templates, as well as C++ codes using "boost". The same thing can be done by using "SWIG"\footnote{\url{http://www.swig.org/Doc3.0/Javascript.html}} of version 3.0+
+
+
+Moreover, we have achieved to create objects from DGtal and to manipulate these objects by invoking the algorithms of the DGtal. To be more precisely, we have created 2 DGtal two-dimension points and draw them to a ".svg" file from the Node.Js environment. This is done by using the Node FFi module.
+
+Lastly, we have tried out Clang for analyzing some simple C++ files' abstract syntax tree, which will help to accomplish the automatically upgrading of JavaScript support for adapting the continuous evolution of DGtal.
+
 
 \section{Contribution}
 
-In brief, after two months work, we have found two possible solutions to our project. One is the foreign function interface (FFI) module of NodeJs. The other one is the software development tool "SWIG". Each of them can be used to invoke C++ written functions in JavaScript.  
+In brief, after more than 4 months' work, we have found two ways to connect a c++ library with Node.js environment. One is using foreign function interface (FFI) module of NodeJs. The other is using the software development tool "SWIG". For the study of node FFI module, we have gone even further as we are now capable of creating objects from DGtal and manipulating these objects by invoking the algorithms of the DGtal by using node FFI module. In addition, we have just started studying Clang for analyzing C++ files' abstract syntax tree.
 
 \section{Report organisation}
 
@@ -59,5 +65,5 @@ Chapter~\ref{chap:Proposals} studies, from the theoretical point of view, that t
 
 Chapter~\ref{chap:Experiments} shows how to build the developing environment, how to reproduce our experimental results, and analysis of the experiments.
 
-Finally, the conclusion summarises the work and introduce new research issues that are worth pursuing
+Finally, the conclusion summarizes the work and introduce new research issues that are worth pursuing
 
